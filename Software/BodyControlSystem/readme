@@ -1,0 +1,5 @@
+
+About the contents of this project.
+
+* BodyConfig.h - Contains all of the configurations used to build the project.
+* lib - Contains all of the libraries used by this project, some being local but where moved to keep the IDE neat. They must be symlinked to $ARDUINO_HOME/libaries/$CHOOSE_A_FOLDER_NAME

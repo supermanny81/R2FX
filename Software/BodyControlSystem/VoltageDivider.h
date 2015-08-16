@@ -25,7 +25,7 @@ class VoltageDivider {
     *               (if it is greater than 5v, resisters must be used)
     * resitor1      For 15v and 30v systems, use 47k.
     * resistor2     For 15v use 24k, for 30v use 9.4k
-    * minVolts      Discharged batter voltage
+    * minVolts      Discharged battery voltage
     * maxVolts      Fully charged battery voltage
     */
     VoltageDivider(int analogVin, float resistor1, float resistor2, float minVolts, float maxVolts);
@@ -42,7 +42,7 @@ class VoltageDivider {
     int getVCCInPct();
 
   private:
-    int ANALOG_VIN;
+    byte ANALOG_VIN;
     float RESISTOR_1;
     float RESISTOR_2;
     float MIN_VOLTS;

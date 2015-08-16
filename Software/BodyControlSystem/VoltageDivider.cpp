@@ -23,5 +23,7 @@ float VoltageDivider::getVCC() {
 }
 
 int VoltageDivider::getVCCInPct() {
-  return ((getVCC() - MIN_VOLTS) / (MAX_VOLTS - MIN_VOLTS)) * 100.0;
+  float vin = getVCC();
+  vin = vin == 0 ? MIN_VOLTS : vin;
+  return ((vin - MIN_VOLTS) / (MAX_VOLTS - MIN_VOLTS)) * 100.0;
 }

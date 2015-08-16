@@ -15,8 +15,8 @@
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
-#include "Adafruit_PWMServoDriver.h"
 #include "Wire.h"
+#include "Adafruit_PWMServoDriver.h"
 #if defined(__AVR__)
  #define WIRE Wire
 #elif defined(CORE_TEENSY) // Teensy boards
