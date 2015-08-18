@@ -14,7 +14,7 @@ VoltageDivider vd = VoltageDivider(VD_ANALOG_VIN_PIN, VD_RESISTOR_1,
                                   
 void setup() {
   // initialize random seed with reading from a PIN that is not used.
-  //randomSeed(analogRead(ANALOG_PIN_SEED));
+  // randomSeed(analogRead(ANALOG_PIN_SEED));
   // Used for debugging
   Serial.begin(SERIAL_BAUD_RATE);
   cmd.clearCommand();
@@ -46,8 +46,8 @@ void cmdLoop() {
       }
       case 'U': {
         switch (cmd.commandBuffer[1]) {
-          case '1': {response = "UA1"; UAP().setUATop(180); break;}
-          case '2': {response = "UA1"; UAP().setUATop(0); break;}
+          case '1': {response = "U1"; UAP().setUATop(180); break;}
+          case '2': {response = "U2"; UAP().setUATop(0); break;}
         }
         break;
       }
