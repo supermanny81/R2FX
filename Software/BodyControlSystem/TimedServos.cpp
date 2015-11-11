@@ -19,6 +19,24 @@ void TimedServos::initializeBodyServoConfig() {
 
   bodyServo[SV_CBI].srv_min = SV_CBI_MIN;
   bodyServo[SV_CBI].srv_max = SV_CBI_MAX;
+
+  bodyServo[SV_LOWER_CBI].srv_min = SV_LOWER_CBI_MIN;
+  bodyServo[SV_LOWER_CBI].srv_max = SV_LOWER_CBI_MAX;
+
+  bodyServo[SV_DPI].srv_min = SV_DPI_MIN;
+  bodyServo[SV_DPI].srv_max = SV_DPI_MAX;
+
+  bodyServo[SV_FL].srv_min = SV_FL_MIN;
+  bodyServo[SV_FL].srv_max = SV_FL_MAX;
+
+  bodyServo[SV_FR].srv_min = SV_FR_MIN;
+  bodyServo[SV_FR].srv_max = SV_FR_MAX;
+
+  bodyServo[SV_RL].srv_min = SV_RL_MIN;
+  bodyServo[SV_RL].srv_max = SV_RL_MAX;
+
+  bodyServo[SV_RR].srv_min = SV_RR_MIN;
+  bodyServo[SV_RR].srv_max = SV_RR_MAX;
 }
 
 void TimedServos::setServoPosition(int srv_num, int srv_pos, int srv_min, int srv_max) {
