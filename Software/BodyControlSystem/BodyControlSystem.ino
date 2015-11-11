@@ -1,10 +1,12 @@
+#include "elapsedMillis.h"
 #include "Wire.h"
 #include "CBI.h"
 #include "VoltageDivider.h"
 #include "CommandParser.h"
 #include "BodyConfig.h"
 #include "Utility.h"
-#include "UAP.h"
+#include "TimedServos.h"
+
 
 CommandParser cmd = CommandParser();
 CBI cbi = CBI();
@@ -46,8 +48,9 @@ void cmdLoop() {
       }
       case 'U': {
         switch (cmd.commandBuffer[1]) {
-          case '1': {response = "U1"; UAP().setUATop(180); break;}
-          case '2': {response = "U2"; UAP().setUATop(0); break;}
+          case '1': {response = "U1"; TimedServos().setUATop(180); break;}
+          case '2': {response = "U2"; TimedServos().setUATop(0); break;}
+          case '3': {response = "U3"; TimedServos().sweep(); break;}
         }
         break;
       }
@@ -80,4 +83,5 @@ void cbiLoop() {
 void loop() {
   cmdLoop();
   cbiLoop();
+  TimedServos().processMovements();
 }

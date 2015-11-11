@@ -14,8 +14,10 @@
 /** Auto Dome **/
 #define AUTO_DOME_ANALOG_PIN 1
 
-/** Body Servos  **/
-#define PWM_SHIELD_ADDRESS 0x40
+/** Body Servo Configuration  **/
+#define BODY_PWM_SHIELD_ADDRESS 0x40
+#define BODY_PWM_SHIELD_SERVO_FREQ 50
+#defint BODY_PWM_SHIELD_CHANNELS 9
 #define SV_UA_TOP 0
 #define SV_UA_TOP_MIN 150
 #define SV_UA_TOP_MAX 600
@@ -23,7 +25,26 @@
 #define SV_UA_BOTTOM_MIN 150
 #define SV_UA_BOTTOM_MAX 600
 #define SV_CBI 2
-#define SV_DPI 3
+#define SV_CBI_MIN 150
+#define SV_CBI_MAX 600
+#define SV_LOWER_CBI 3
+#define SV_LOWER_CBI_MIN 150
+#define SV_LOWER_CBI_MAX 600
+#define SV_DPI 4
+#define SV_DPI_MIN 150
+#define SV_DPI_MAX 600
+#define SV_FL 5
+#define SV_FL_MIN 150
+#define SV_FL_MAX 600
+#define SV_FR 6
+#define SV_FR_MIN 150
+#define SV_FR_MAX 600
+#define SV_RL 7
+#define SV_RL_MIN 150
+#define SV_RL_MAX 600
+#define SV_RR 8
+#define SV_RR_MIN 150
+#define SV_RR_MAX 600
 
 /** Charge Bay and Data Port **/
 //SPI Configuration for CBI and DPL
