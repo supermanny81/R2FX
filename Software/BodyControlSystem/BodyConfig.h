@@ -17,7 +17,7 @@
 /** Body Servo Configuration  **/
 #define BODY_PWM_SHIELD_ADDRESS 0x40
 #define BODY_PWM_SHIELD_SERVO_FREQ 50
-#defint BODY_PWM_SHIELD_CHANNELS 9
+#define BODY_PWM_SHIELD_CHANNELS 9
 #define SV_UA_TOP 0
 #define SV_UA_TOP_MIN 150
 #define SV_UA_TOP_MAX 600
