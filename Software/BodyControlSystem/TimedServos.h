@@ -13,7 +13,7 @@
 #include "Adafruit_PWMServoDriver.h"
 
 class TimedServos {
-  
+
     typedef struct
     {
       int start_pos = 0;
@@ -31,7 +31,7 @@ class TimedServos {
     Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(BODY_PWM_SHIELD_ADDRESS);
 
     void initializeBodyServoConfig();
-    
+
     void setServoPosition(int SRV_NUM, int SRV_POS, int SRV_MIN, int SRV_MAX);
 
   public:
