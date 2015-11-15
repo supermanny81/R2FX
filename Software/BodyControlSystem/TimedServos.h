@@ -37,7 +37,10 @@ class TimedServos {
   public:
     TimedServos();
 
-    void setServoPosition(int SRV_NUM, int SRV_POS, int time_allotted);
+    /**
+     * Sets the targeted servo position and the amount of time alloted to reach the position.
+     */
+    void setServoPosition(int channel, int srv_pos, int time_alloted);
     void setUATop(int degree);
     void setUABottom(int degree);
     void processMovements();

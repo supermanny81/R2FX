@@ -39,14 +39,34 @@ void TimedServos::initializeBodyServoConfig() {
   bodyServo[SV_RR].srv_max = SV_RR_MAX;
 }
 
+void TimedServos::setServoPosition(int channel, int srv_pos, int time_alloted) {
+  // makes sure we don't attempt to make the servos travel faster than possible
+  int min_travel_time = abs(bodyServo[channel].start_pos - srv_pos) * BODY_PWM_MAX_TRAVEL_PER_MILLI;
+  time_alloted = (min_travel_time > time_alloted) ? min_travel_time : time_alloted;
+  
+  bodyServo[channel].end_pos = bodyServo[channel].start_pos;
+  bodyServo[channel].start_pos = srv_pos;
+  bodyServo[channel].time_allotted = time_alloted;
+}
+
+void TimedServos::processMovements() {
+
+
+}
+
+
+
+
+
+
+
+
 void TimedServos::setServoPosition(int srv_num, int srv_pos, int srv_min, int srv_max) {
   if (srv_pos > 180) {
     srv_pos = 180;
   }
   uint16_t pulselength = map(srv_pos, 0, 180, srv_min, srv_max);
   pwm.setPWM(srv_num, 0, pulselength);
-
-  Serial.println(pulselength);
 }
 
 void TimedServos::setUATop(int degree) {
@@ -57,20 +77,18 @@ void TimedServos::setUABottom(int degree) {
   setServoPosition(SV_UA_BOTTOM, degree, SV_UA_BOTTOM_MIN, SV_UA_BOTTOM_MAX);
 }
 
-void TimedServos::processMovements() {
-
-
-}
 
 void TimedServos::sweep() {
   for (int i = 0; i <= 180; i += 20) {
     setServoPosition(SV_UA_TOP, i, SV_UA_TOP_MIN, SV_UA_TOP_MAX);
-    delay(100);
+    delay(40);
   }
+  pwm.setPWM(SV_UA_TOP, 0, 0);
+  delay(500);
 
   for (int i = 180; i >= 0; i -= 20) {
     setServoPosition(SV_UA_TOP, i, SV_UA_TOP_MIN, SV_UA_TOP_MAX);
-    delay(90);
+    delay(40);
   }
   pwm.setPWM(SV_UA_TOP, 0, 0);
 }
