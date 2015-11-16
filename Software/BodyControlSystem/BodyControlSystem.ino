@@ -12,9 +12,11 @@
 
 CommandParser cmd = CommandParser();
 CBI cbi = CBI();
+TimedServos ts = TimedServos();      
 VoltageDivider vd = VoltageDivider(VD_ANALOG_VIN_PIN, VD_RESISTOR_1,
                                    VD_RESISTOR_2, VD_MIN_VOLTAGE, 
                                    VD_MAX_VOLTAGE);
+         
                                   
 void setup() {
   // initialize random seed with reading from a PIN that is not used.
@@ -23,6 +25,7 @@ void setup() {
   Serial.begin(SERIAL_BAUD_RATE);
   cmd.clearCommand();
   Serial.println(F("Body Control Version 1.0"));
+  ts.setup();
 }
 
 void cmdLoop() {
@@ -50,9 +53,9 @@ void cmdLoop() {
       }
       case 'U': {
         switch (cmd.commandBuffer[1]) {
-          case '1': {response = "U1"; TimedServos().setUATop(180); break;}
-          case '2': {response = "U2"; TimedServos().setUATop(0); break;}
-          case '3': {response = "U3"; TimedServos().sweep(); break;}
+          case '1': {response = "U1"; ts.setServoPosition(0, 1, 180, 2000); break;}
+          case '2': {response = "U2"; ts.setServoPosition(0, 1, 0, 0); break;}
+          case '3': {response = "U3"; ; break;}
         }
         break;
       }
@@ -85,5 +88,5 @@ void cbiLoop() {
 void loop() {
   cmdLoop();
   cbiLoop();
-  TimedServos().processMovements();
+  ts.processMovements();
 }

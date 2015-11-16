@@ -16,23 +16,29 @@ class TimedServos {
 
     typedef struct
     {
-      int start_pos = 0;
-      int end_pos = 0;
-      int time_allotted = 0;
-      elapsedMillis sinceLastCmd;
-      int srv_min;
-      int srv_max;
+      uint8_t start_pos = 0;
+      uint8_t end_pos = 0;
+      uint8_t curr_pos = 0;
+      uint16_t time_allotted = 0;
+      unsigned long millisAtCommand = 0;
+      uint16_t srv_min;
+      uint16_t srv_max;
       boolean isInversed = false;
+      boolean isDisabled = false;
     }  TimedServo;
 
-    TimedServo bodyServo[BODY_PWM_SHIELD_CHANNELS];
+    typedef struct 
+    {
+      TimedServo channels[16];
+      Adafruit_PWMServoDriver pwm;
+    } PWMBoard;
 
+    PWMBoard servoBoards[2];
+        
   private:
-    Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(BODY_PWM_SHIELD_ADDRESS);
-
+    void setServoPulse(Adafruit_PWMServoDriver pwm, uint8_t srv_num, uint8_t srv_pos, uint16_t srv_min, uint16_t srv_max);
+    void disableChannel(Adafruit_PWMServoDriver pwm, uint8_t srv_num);
     void initializeBodyServoConfig();
-
-    void setServoPosition(int SRV_NUM, int SRV_POS, int SRV_MIN, int SRV_MAX);
 
   public:
     TimedServos();
@@ -40,11 +46,12 @@ class TimedServos {
     /**
      * Sets the targeted servo position and the amount of time alloted to reach the position.
      */
-    void setServoPosition(int channel, int srv_pos, int time_alloted);
+    void setServoPosition(uint8_t board, uint8_t channel, uint8_t srv_pos, uint16_t time_alloted);
     void setUATop(int degree);
     void setUABottom(int degree);
     void processMovements();
     void sweep();
+    void setup();
 };
 
 #endif // TimedServos.h

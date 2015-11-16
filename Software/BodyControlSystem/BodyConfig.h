@@ -7,7 +7,7 @@
 
 /** Global **/
 // Serial Configuration
-#define SERIAL_BAUD_RATE 9600
+#define SERIAL_BAUD_RATE 250000
 // Random Seed Config
 #define ANALOG_PIN_SEED 5
 
@@ -16,7 +16,7 @@
 
 /** Body Servo Configuration  **/
 #define BODY_PWM_SHIELD_ADDRESS 0x40
-#define BODY_PWM_SHIELD_SERVO_FREQ 50
+#define BODY_PWM_SHIELD_SERVO_FREQ 60
 #define BODY_PWM_SHIELD_CHANNELS 9
 // Define in degrees
 #define BODY_PWM_MAX_TRAVEL_PER_MILLI 0.5
