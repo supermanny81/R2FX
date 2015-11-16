@@ -5,6 +5,10 @@
   BSD license, all text above must be included in any redistribution
 **/
 
+
+#ifndef BodyConfig_h
+#define BodyConfig_h
+
 /** Global **/
 // Serial Configuration
 #define SERIAL_BAUD_RATE 250000
@@ -68,3 +72,5 @@
 #define VD_RESISTOR_2 24000.0
 #define VD_MIN_VOLTAGE 10.5
 #define VD_MAX_VOLTAGE 12.7
+
+#endif // BodyConfig_h
