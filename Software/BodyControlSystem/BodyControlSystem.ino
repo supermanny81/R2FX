@@ -28,7 +28,7 @@ void setup() {
   ts.setup();
 }
 
-void cmdLoop() {
+void processCmdInput() {
   if (cmd.hasCommand()) {
     const char *response = {'\0'};
     byte exitCode = 0;
@@ -86,7 +86,7 @@ void cbiLoop() {
 }
 
 void loop() {
-  cmdLoop();
+  processCmdInput();
   cbiLoop();
   ts.processMovements();
 }
