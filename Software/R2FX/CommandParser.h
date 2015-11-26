@@ -22,7 +22,7 @@ class CommandParser {
       RECEIVING, EMPTY, WAIT
     };
     CmdState state = EMPTY;
-     
+
   public:
     /**
     * Read from the commandBuffer when the cmdState is in wait.
