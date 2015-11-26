@@ -70,32 +70,32 @@ void processCmdInput() {
                 break;
               }
             case '1': {
-                servoCommand(1, SV_P1, cmd.commandBuffer, 3, 3);
+                servoCommand(1, SV_P1, cmd.commandBuffer, 2, 3);
                 response = "P1";
                 break;
               }
             case '2': {
-                servoCommand(1, SV_P2, cmd.commandBuffer, 3, 3);
+                servoCommand(1, SV_P2, cmd.commandBuffer, 2, 3);
                 response = "P2";
                 break;
               }
             case '3': {
-                servoCommand(1, SV_P3, cmd.commandBuffer, 3, 3);
+                servoCommand(1, SV_P3, cmd.commandBuffer, 2, 3);
                 response = "P3";
                 break;
               }
             case '4': {
-                servoCommand(1, SV_P4, cmd.commandBuffer, 3, 3);
+                servoCommand(1, SV_P4, cmd.commandBuffer, 2, 3);
                 response = "P4";
                 break;
               }
             case '7': {
-                servoCommand(1, SV_P7, cmd.commandBuffer, 3, 3);
+                servoCommand(1, SV_P7, cmd.commandBuffer, 2, 3);
                 response = "P7";
                 break;
               }
             case 'A': {
-                servoCommand(1, SV_PA, cmd.commandBuffer, 3, 3);
+                servoCommand(1, SV_PA, cmd.commandBuffer, 2, 3);
                 response = "PA";
                 break;
               }
@@ -146,18 +146,14 @@ void processCmdInput() {
         }
       case 'U': {
           switch (cmd.commandBuffer[1]) {
-            case '1': {
-                response = "U1";
-                ts.setServoPosition(0, 1, 180, 2000);
+            case 'T': {
+                servoCommand(0, SV_UA_TOP, cmd.commandBuffer, 2, 3);
+                response = "UT";
                 break;
               }
-            case '2': {
-                response = "U2";
-                ts.setServoPosition(0, 1, 0, 0);
-                break;
-              }
-            case '3': {
-                response = "U3"; ;
+            case 'B': {
+                servoCommand(0, SV_UA_BOTTOM, cmd.commandBuffer, 2, 3);
+                response = "UB";
                 break;
               }
           }
