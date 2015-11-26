@@ -7,22 +7,27 @@ TimedServos::TimedServos() {}
 
 void TimedServos::setup() {
   initializeBodyServoConfig();
-  TWBR = 12; // upgrade to 400KHz!
+  initializeDomeConfig();
 }
 
 void TimedServos::initializeBodyServoConfig() {
+  // Configure body system
   servoBoards[0].pwm.begin();
   servoBoards[0].pwm.setPWMFreq(BODY_PWM_SHIELD_SERVO_FREQ);
 
+  servoBoards[0].channels[SV_UA_TOP].isInversed = SV_UA_IS_INVERSED;
   servoBoards[0].channels[SV_UA_TOP].srv_min = SV_UA_TOP_MIN;
   servoBoards[0].channels[SV_UA_TOP].srv_max = SV_UA_TOP_MAX;
 
+  servoBoards[0].channels[SV_UA_BOTTOM].isInversed = SV_UA_BOTTOM_IS_INVERSED;
   servoBoards[0].channels[SV_UA_BOTTOM].srv_min = SV_UA_BOTTOM_MIN;
   servoBoards[0].channels[SV_UA_BOTTOM].srv_max = SV_UA_BOTTOM_MAX;
 
+  servoBoards[0].channels[SV_CBI].isInversed = SV_CBI_IS_INVERSED;
   servoBoards[0].channels[SV_CBI].srv_min = SV_CBI_MIN;
   servoBoards[0].channels[SV_CBI].srv_max = SV_CBI_MAX;
 
+  // TODO: finish adding support for inversed servos
   servoBoards[0].channels[SV_LOWER_CBI].srv_min = SV_LOWER_CBI_MIN;
   servoBoards[0].channels[SV_LOWER_CBI].srv_max = SV_LOWER_CBI_MAX;
 
@@ -42,9 +47,41 @@ void TimedServos::initializeBodyServoConfig() {
   servoBoards[0].channels[SV_RR].srv_max = SV_RR_MAX;
 }
 
+void TimedServos::initializeDomeConfig() {
+  // Configure dome system
+  servoBoards[1].pwm.begin();
+  servoBoards[1].pwm.setPWMFreq(DOME_PWM_SHIELD_SERVO_FREQ);
+
+  servoBoards[1].channels[SV_PPC].srv_min = SV_PPC_MIN;
+  servoBoards[1].channels[SV_PPC].srv_max = SV_PPC_MAX;
+
+  servoBoards[1].channels[SV_PP1].srv_min = SV_PP1_MIN;
+  servoBoards[1].channels[SV_PP1].srv_max = SV_PP1_MAX;
+
+  servoBoards[1].channels[SV_PP2].srv_min = SV_PP2_MIN;
+  servoBoards[1].channels[SV_PP2].srv_max = SV_PP2_MAX;
+
+  servoBoards[1].channels[SV_PP5].srv_min = SV_PP5_MIN;
+  servoBoards[1].channels[SV_PP5].srv_max = SV_PP5_MAX;
+
+  servoBoards[1].channels[SV_PP6].srv_min = SV_PP6_MIN;
+  servoBoards[1].channels[SV_PP6].srv_max = SV_PP6_MAX;
+
+  servoBoards[1].channels[SV_P1].srv_min = SV_P1_MIN;
+  servoBoards[1].channels[SV_P1].srv_max = SV_P1_MAX;
+
+  servoBoards[1].channels[SV_P2].srv_min = SV_P2_MIN;
+  servoBoards[1].channels[SV_P2].srv_max = SV_P2_MAX;
+}
+
 void TimedServos::setServoPosition(uint8_t board, uint8_t channel, uint8_t srv_pos, uint16_t time_allotted) {
+  srv_pos = srv_pos > 180 ? 180 : srv_pos;
+  // change target servo position for inversed servos
+  if (servoBoards[board].channels[channel].isInversed)
+    srv_pos = map( srv_pos, 0, 180, 180, 0);
+
   // makes sure we don't attempt to make the servos travel faster than possible
-  uint16_t min_travel_time = abs(servoBoards[board].channels[channel].curr_pos - srv_pos) * BODY_PWM_MAX_TRAVEL_PER_MILLI;
+  uint16_t min_travel_time = abs(servoBoards[board].channels[channel].curr_pos - srv_pos) * PWM_MAX_TRAVEL_PER_MILLI;
   time_allotted = (min_travel_time > time_allotted) ? min_travel_time : time_allotted;
   // set the position and time to reach it
   servoBoards[board].channels[channel].start_pos = servoBoards[board].channels[channel].curr_pos;

@@ -39,6 +39,7 @@ class TimedServos {
     void setServoPulse(Adafruit_PWMServoDriver pwm, uint8_t srv_num, uint8_t srv_pos, uint16_t srv_min, uint16_t srv_max);
     void disableChannel(Adafruit_PWMServoDriver pwm, uint8_t srv_num);
     void initializeBodyServoConfig();
+    void initializeDomeConfig();
 
   public:
     TimedServos();

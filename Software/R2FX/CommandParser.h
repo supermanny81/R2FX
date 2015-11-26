@@ -17,7 +17,7 @@
 
 class CommandParser {
   private:
-    byte cmdIndex = 0; // never greater than 16
+    char cmdIndex = 0; // never greater than 16
     enum CmdState {
       RECEIVING, EMPTY, WAIT
     };
