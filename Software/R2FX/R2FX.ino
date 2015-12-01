@@ -1,3 +1,17 @@
+/**
+ *                ____  ____  _______  __
+ *               |  _ \|___ \|  ___\ \/ /
+ *               | |_) | __) | |_   \  / 
+ *               |  _ < / __/|  _|  /  \ 
+ *               |_| \_\_____|_|   /_/\_\                      
+ *           -------------------------------
+ *            Visual effects control system.
+ *         
+ * Copyright (c) 2015 Manny Garcia, written for the R2Builders Group
+ * 
+ * BSD license, all text above must be included in any redistribution
+ */
+
 #include <Adafruit_PWMServoDriver.h>
 #include "LedControl.h"
 #include "elapsedMillis.h"
