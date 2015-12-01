@@ -56,7 +56,7 @@ Command          | Description                         | Parameters             
 ###<a name="r2fx-byte-protocol"></a>R2FX Byte Protocol
 <i>Work in progress</i>
 
-A R2FX command and its data parameters are refferred to as an R2FX message . The minimum size of a message is 2 bytes (one command byte, and a length paramter signed 8 bit integer (-1) with no parameter bytes). The maximum size of a R2FX message currently can be up to 16 bytes, however in practice this should rarely happen and in theory could be expanded to 129 bytes (CMD + LEN + 127 bytes). 
+A R2FX command and its data parameters are refferred to as an R2FX message . The minimum size of a message is 2 bytes *(one command byte, and a length paramter signed 8 bit integer (-1) with no parameter bytes)*. The maximum size of a R2FX message currently can be up to 16 bytes, however in practice this should rarely happen and in theory could be expanded to 129 bytes (CMD + LEN + 127 bytes). 
 
 An R2FX message **always** starts with a command byte. The table below outlines the possible command types that may be used when using R2FX.
 
@@ -72,7 +72,7 @@ An R2FX message **always** starts with a command byte. The table below outlines 
 
 #### Body Servos
 
-| Command | Description | Length | Parameters  <br>**0-14 bytes** 
+| Command | Description | Length | Parameters  <br>*0-14 bytes* 
 :-----------------|:--------------|:---------------|:---
  0xF0             |    |      0    |        ...      
  
