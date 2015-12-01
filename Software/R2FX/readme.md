@@ -10,7 +10,7 @@ This software is used to control the auxilary functions in an astromech.  Contro
 
 [**R2FX ASCII Protocol**](#r2fx-ascii-protocol), [**R2FX Byte Protocol**](#r2fx-byte-protocol) - A description of the protocols used to communicate to the R2FX control system.
 
-###<a name="r2fx-ascii-protocol"></a>R2FX ASCII Protocol _[**back to top**](#r2fx-ino)_
+###<a name="r2fx-ascii-protocol"></a>R2FX ASCII Protocol _[(top)](#r2fx-ino)_
 
 An ASCII based protocol to interact with the R2FX system.  While this protocol provides an 'simpler and easier' way of issuing commands, it will only ever exist for testing and demo purposes and most likely will never be a complete implementation of the prefferred byte based protocol which is more robust, concise and allows for 'sequences' of commands to be stored in FRAM.
 
@@ -41,26 +41,26 @@ OK
 ERR
 ```
 
-##### Dome Commands _[back to ascii protocol](#r2fx-ascii-protocol)_
+##### Dome Commands _[(ascii protocol)](#r2fx-ascii-protocol)_
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
 `PPC`            | center pie panel                    | `null` or `0-180` (null == 0)| `[PPC90]`
 `PP(1,2,5,6)`    | pie panels #1,2,3,5,6               | ...                          | `[PP1]`
 `PP(1-4)|(7,8,A)`| panel #1-4, or 7, 8, A (Hex for 10) | ...                          | `[PA0]`
 
-##### Body Commands _[back to ascii protocol](#r2fx-ascii-protocol)_
+##### Body Commands _[(ascii protocol)](#r2fx-ascii-protocol)_
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
 `U(T|B)`         | controls the position of the utility arms T=top, B=bottom | `null` or `0-180` (null == 0)| `[UT145]`
                                                        
-###<a name="r2fx-byte-protocol"></a>R2FX Byte Protocol _[**back to top**](#r2fx-ino)_
+###<a name="r2fx-byte-protocol"></a>R2FX Byte Protocol _[(top)](#r2fx-ino)_
 ---<i>Work in progress</i>----
 
 A R2FX command and its data parameters are refferred to as an R2FX message . The minimum size of a message is 3 bytes *(one command byte, a length parameter signed 8 bit integer (-1) with no parameter (data) bytes), and a CRC field*. The maximum size of a R2FX message currently can be up to 16 bytes, however in practice this should rarely happen and in theory could be expanded to 130 bytes (CMD + LEN + 127 bytes + CRC). 
 
 An R2FX message **always** starts with a command byte. The table below outlines the possible command types that may be used when using R2FX.
 
-##### R2FX Message Format _[back to byte protocol](#r2fx-byte-protocol)_
+##### R2FX Message Format _[(byte protocol)](#r2fx-byte-protocol)_
 ```
 
          CMD.,  LEN.,  DATA..............,  CRC
@@ -71,7 +71,7 @@ An R2FX message **always** starts with a command byte. The table below outlines 
             
 ```
 
-##### R2FX CRC _[back to byte protocol](#r2fx-byte-protocol)_
+##### R2FX CRC _[(byte protocol)](#r2fx-byte-protocol)_
 
 ```
 const byte CRC_INIT = 0xF0;
@@ -94,7 +94,7 @@ unsigned byte crc_calc(unsigned byte buffer[], byte size) {
 ```
 
 
-##### Reserved Commands _[back to byte protocol](#r2fx-byte-protocol)_
+##### Reserved Commands _[(byte protocol)](#r2fx-byte-protocol)_
 ```
 
 0x5B	Reserved to maintain compatibility with R2FX serial based protocol
@@ -102,14 +102,14 @@ unsigned byte crc_calc(unsigned byte buffer[], byte size) {
 
 ```
 
-##### Dome Commands _[back to byte protocol](#r2fx-byte-protocol)_
+##### Dome Commands _[(byte protocol)](#r2fx-byte-protocol)_
 
 | Command | Description | Length | Parameters  <br>*0-13 bytes* 
 :-----------------|:--------------|:---------------|:---
  0xF0             |    |      0    |        ...      
  
  
-##### Body Servos _[back to byte protocol](#r2fx-byte-protocol)_
+##### Body Servos _[(byte protocol)](#r2fx-byte-protocol)_
 
 | Command | Description | Length | Parameters  <br>*0-13 bytes* 
 :-----------------|:--------------|:---------------|:---
