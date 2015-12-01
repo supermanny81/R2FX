@@ -1,5 +1,5 @@
 
-#R2FX.ino
+#<a name="r2fx-ino"></a>R2FX.ino
 
 This software is used to control the auxilary functions in an astromech.  Control over compnonents like a panel or lighting system may be directly controlled through here, however more importantly the goal of this project is to expose the capability of creating new sequences and sharing them with other astromech builders. 
 
@@ -8,9 +8,9 @@ This software is used to control the auxilary functions in an astromech.  Contro
 
 [**R2FXConfig.h** ](#r2fx-configuration) - Contains all of the configurations used to build the project. This is the only file that **needs** be edited by end users.
 
-[**R2FX ASCII Protocol**](#r2fx-ascii-protocol) | [**R2FX Byte Protocol**](#r2fx-byte-protocol) - A description of the protocol used to communicate to the R2FX control system.
+[**R2FX ASCII Protocol**](#r2fx-ascii-protocol), [**R2FX Byte Protocol**](#r2fx-byte-protocol) - A description of the protocols used to communicate to the R2FX control system.
 
-###<a name="r2fx-ascii-protocol"></a>R2FX ASCII Protocol
+###<a name="r2fx-ascii-protocol"></a>R2FX ASCII Protocol _[**back to top**](#r2fx-ino)_
 
 An ASCII based protocol to interact with the R2FX system.  While this protocol provides an 'simpler and easier' way of issuing commands, it will only ever exist for testing and demo purposes and most likely will never be a complete implementation of the prefferred byte based protocol which is more robust, concise and allows for 'sequences' of commands to be stored in FRAM.
 
@@ -41,44 +41,43 @@ OK
 ERR
 ```
 
-#### Dome Commands
+##### Dome Commands _[back to ascii protocol](#r2fx-ascii-protocol)_
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
 `PPC`            | center pie panel                    | `null` or `0-180` (null == 0)| `[PPC90]`
 `PP(1,2,5,6)`    | pie panels #1,2,3,5,6               | ...                          | `[PP1]`
 `PP(1-4)|(7,8,A)`| panel #1-4, or 7, 8, A (Hex for 10) | ...                          | `[PA0]`
 
-#### Body Commands
+##### Body Commands _[back to ascii protocol](#r2fx-ascii-protocol)_
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
 `U(T|B)`         | controls the position of the utility arms T=top, B=bottom | `null` or `0-180` (null == 0)| `[UT145]`
                                                        
-###<a name="r2fx-byte-protocol"></a>R2FX Byte Protocol
-<i>Work in progress</i>
+###<a name="r2fx-byte-protocol"></a>R2FX Byte Protocol _[**back to top**](#r2fx-ino)_
+---<i>Work in progress</i>----
 
 A R2FX command and its data parameters are refferred to as an R2FX message . The minimum size of a message is 3 bytes *(one command byte, a length parameter signed 8 bit integer (-1) with no parameter (data) bytes), and a CRC field*. The maximum size of a R2FX message currently can be up to 16 bytes, however in practice this should rarely happen and in theory could be expanded to 130 bytes (CMD + LEN + 127 bytes + CRC). 
 
 An R2FX message **always** starts with a command byte. The table below outlines the possible command types that may be used when using R2FX.
 
-##### R2FX Message Format
+##### R2FX Message Format _[back to byte protocol](#r2fx-byte-protocol)_
 ```
 
-         CMD., LEN., DATA............, CRC
-         0xF0, 0x03, 0xA1, 0xC1, 0xF7, 0xCC
-         |___________________________|
-                      | |
-       CRC computed from the complete packet.  
-       
+         CMD.,  LEN.,  DATA..............,  CRC
+         0xF0,  0x03,  0xA1,  0xC1,  0xF7,  0xCC
+         |_____________________________________|
+                          | |
+          CRC computed from the complete packet.    
+            
 ```
 
-##### R2FX CRC
+##### R2FX CRC _[back to byte protocol](#r2fx-byte-protocol)_
 
 ```
 const byte CRC_INIT = 0xF0;
 const byte CRC_POLY = 0x07;
 
-unsigned byte crc_calc(unsigned char buffer[], unsigned short size)
-{
+unsigned byte crc_calc(unsigned byte buffer[], byte size) {
   unsigned long i;
   unsigned byte crc;
 
@@ -95,7 +94,7 @@ unsigned byte crc_calc(unsigned char buffer[], unsigned short size)
 ```
 
 
-#### Reserved Commands
+##### Reserved Commands _[back to byte protocol](#r2fx-byte-protocol)_
 ```
 
 0x5B	Reserved to maintain compatibility with R2FX serial based protocol
@@ -103,9 +102,14 @@ unsigned byte crc_calc(unsigned char buffer[], unsigned short size)
 
 ```
 
-#### Dome Commands
+##### Dome Commands _[back to byte protocol](#r2fx-byte-protocol)_
 
-#### Body Servos
+| Command | Description | Length | Parameters  <br>*0-13 bytes* 
+:-----------------|:--------------|:---------------|:---
+ 0xF0             |    |      0    |        ...      
+ 
+ 
+##### Body Servos _[back to byte protocol](#r2fx-byte-protocol)_
 
 | Command | Description | Length | Parameters  <br>*0-13 bytes* 
 :-----------------|:--------------|:---------------|:---
