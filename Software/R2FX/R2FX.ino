@@ -14,12 +14,11 @@
 
 #include <Adafruit_PWMServoDriver.h>
 #include "LedControl.h"
-#include "elapsedMillis.h"
 #include "Wire.h"
 #include "CBI.h"
 #include "VoltageDivider.h"
 #include "CommandParser.h"
-#include "BodyConfig.h"
+#include "R2FXConfig.h"
 #include "Utility.h"
 #include "TimedServos.h"
 

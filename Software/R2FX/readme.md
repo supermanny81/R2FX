@@ -56,9 +56,44 @@ Command          | Description                         | Parameters             
 ###<a name="r2fx-byte-protocol"></a>R2FX Byte Protocol
 <i>Work in progress</i>
 
-A R2FX command and its data parameters are refferred to as an R2FX message . The minimum size of a message is 2 bytes *(one command byte, and a length paramter signed 8 bit integer (-1) with no parameter bytes)*. The maximum size of a R2FX message currently can be up to 16 bytes, however in practice this should rarely happen and in theory could be expanded to 129 bytes (CMD + LEN + 127 bytes). 
+A R2FX command and its data parameters are refferred to as an R2FX message . The minimum size of a message is 3 bytes *(one command byte, a length parameter signed 8 bit integer (-1) with no parameter (data) bytes), and a CRC field*. The maximum size of a R2FX message currently can be up to 16 bytes, however in practice this should rarely happen and in theory could be expanded to 130 bytes (CMD + LEN + 127 bytes + CRC). 
 
 An R2FX message **always** starts with a command byte. The table below outlines the possible command types that may be used when using R2FX.
+
+##### R2FX Message Format
+```
+
+         CMD., LEN., DATA............, CRC
+         0xF0, 0x03, 0xA1, 0xC1, 0xF7, 0xCC
+         |___________________________|
+                      | |
+       CRC computed from the complete packet.  
+       
+```
+
+##### R2FX CRC
+
+```
+const byte CRC_INIT = 0xF0;
+const byte CRC_POLY = 0x07;
+
+unsigned byte crc_calc(unsigned char buffer[], unsigned short size)
+{
+  unsigned long i;
+  unsigned byte crc;
+
+  crc = CRC_INIT;
+
+  for (i=0;i<size * 8;i++) {
+    crc = (crc << 1) | (crc >> (7));
+    if (buffer[i/8] & (0x80 >> (i%8))) {
+      crc ^= CRC_POLY;
+    }
+  }
+  return crc;
+}
+```
+
 
 #### Reserved Commands
 ```
@@ -72,7 +107,7 @@ An R2FX message **always** starts with a command byte. The table below outlines 
 
 #### Body Servos
 
-| Command | Description | Length | Parameters  <br>*0-14 bytes* 
+| Command | Description | Length | Parameters  <br>*0-13 bytes* 
 :-----------------|:--------------|:---------------|:---
  0xF0             |    |      0    |        ...      
  

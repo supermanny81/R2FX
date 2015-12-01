@@ -18,7 +18,7 @@
 #endif
 
 #include "LedControl.h"
-#include "BodyConfig.h"
+#include "R2FXConfig.h"
 
 class CBI {
   private:

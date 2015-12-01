@@ -10,7 +10,7 @@
 
 #include "LedControl.h"
 #include "CBI.h"
-#include "BodyConfig.h"
+#include "R2FXConfig.h"
 
 /**
 Initialize the displays by seting the brightness and clearing the display, just in case.

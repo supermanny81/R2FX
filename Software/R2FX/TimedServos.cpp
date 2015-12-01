@@ -1,4 +1,11 @@
-#include "BodyConfig.h"
+/**
+  TimedServos.h - A library for managing timed servo movements on PWM boards.
+
+  Copyright (c) 2015 Manny Garcia, written for the R2Builders Group
+
+  BSD license, all text above must be included in any redistribution
+**/
+#include "R2FXConfig.h"
 #include "Wire.h"
 #include "Adafruit_PWMServoDriver.h"
 #include "TimedServos.h"
@@ -54,6 +61,7 @@ void TimedServos::initializeBodyServoConfig() {
 
 void TimedServos::initializeDomeConfig() {
   // Configure dome system
+  // Upper panels
   servoBoards[1].pwm.begin();
   servoBoards[1].pwm.setPWMFreq(DOME_PWM_SHIELD_SERVO_FREQ);
 
@@ -64,7 +72,6 @@ void TimedServos::initializeDomeConfig() {
   servoBoards[1].channels[SV_PP1].isInversed = SV_PP1_IS_INVERSED;
   servoBoards[1].channels[SV_PP1].srv_min = SV_PP1_MIN;
   servoBoards[1].channels[SV_PP1].srv_max = SV_PP1_MAX;
-
 
   servoBoards[1].channels[SV_PP2].isInversed = SV_PP2_IS_INVERSED;
   servoBoards[1].channels[SV_PP2].srv_min = SV_PP2_MIN;
@@ -78,6 +85,7 @@ void TimedServos::initializeDomeConfig() {
   servoBoards[1].channels[SV_PP6].srv_min = SV_PP6_MIN;
   servoBoards[1].channels[SV_PP6].srv_max = SV_PP6_MAX;
 
+  // Lower panels
   servoBoards[1].channels[SV_P1].isInversed = SV_P1_IS_INVERSED;
   servoBoards[1].channels[SV_P1].srv_min = SV_P1_MIN;
   servoBoards[1].channels[SV_P1].srv_max = SV_P1_MAX;
@@ -125,6 +133,7 @@ void TimedServos::processMovements() {
     for (uint8_t channel = 0; channel < 16; channel++) {
       unsigned long timeElapsed = (millis() - servoBoards[board].channels[channel].millisAtCommand);
       if (servoBoards[board].channels[channel].curr_pos != servoBoards[board].channels[channel].end_pos) {
+        
         if (servoBoards[board].channels[channel].end_pos > servoBoards[board].channels[channel].start_pos) {
           uint8_t degree = map(timeElapsed, 0, servoBoards[board].channels[channel].time_allotted, servoBoards[board].channels[channel].start_pos, servoBoards[board].channels[channel].end_pos);
           servoBoards[board].channels[channel].curr_pos = (degree > 180) ? 180 : degree;
