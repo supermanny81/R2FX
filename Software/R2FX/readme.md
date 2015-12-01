@@ -44,14 +44,14 @@ ERR
 #### Dome Commands
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
-`PPC`            | Center Pie Panel                    | `null` or `0-180` (null == 0)| `[PPC90]`
-`PP(1,2,5,6)`    | Pie Panels #1,2,3,5,6               | ...                          | `[PP1]`
-`PP(1-4)|(7,8,A)`| Panel #1-4, or 7, 8, A (Hex for 10) | ...                          | `[PA0]`
+`PPC`            | center pie panel                    | `null` or `0-180` (null == 0)| `[PPC90]`
+`PP(1,2,5,6)`    | pie panels #1,2,3,5,6               | ...                          | `[PP1]`
+`PP(1-4)|(7,8,A)`| panel #1-4, or 7, 8, A (Hex for 10) | ...                          | `[PA0]`
 
 #### Body Commands
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
-`U(T|B)`         | Controls the position of the Utility Arms T=top, B=bottom | `null` or `0-180` (null == 0)| `[UT145]`
+`U(T|B)`         | controls the position of the utility arms T=top, B=bottom | `null` or `0-180` (null == 0)| `[UT145]`
                                                        
 ###<a name="r2fx-byte-protocol"></a>R2FX Byte Protocol
 <i>Work in progress</i>
