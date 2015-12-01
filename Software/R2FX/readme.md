@@ -23,6 +23,23 @@ An example of it's usage can be found below, here we are closing the center pie 
 [PPC0][PP180]
 
 ```
+In addition to sending messages, the protocol also returns reponses.  A R2FX ASCII response will contain one or more lines, followed by an exit message of either `OK` or `ERR`.  If entered into a terminal, these are some of the responses you may get.
+
+```
+// close the center panel
+> [PPC0]
+PPC
+OK
+
+// move to 80 degrees
+> [PP180]
+PP1
+OK
+
+// Unmapped command
+> [FOO-BAR]
+ERR
+```
 
 #### Dome Commands
 Command          | Description                         | Parameters                   | Example
@@ -55,7 +72,7 @@ An R2FX message **always** starts with a command byte. The table below outlines 
 
 #### Body Servos
 
-| CMD | CMD Description | LEN | PARAM  <br>**0-14 bytes** 
+| Command | Description | Length | Parameters  <br>**0-14 bytes** 
 :-----------------|:--------------|:---------------|:---
  0xF0             |    |      0    |        ...      
  
