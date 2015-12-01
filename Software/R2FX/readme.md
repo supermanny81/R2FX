@@ -48,7 +48,7 @@ Command          | Description                         | Parameters             
 `PP(1,2,5,6)`    | pie panels #1,2,3,5,6               | ...                          | `[PP1]`
 `PP(1-4)|(7,8,A)`| panel #1-4, or 7, 8, A (Hex for 10) | ...                          | `[PA0]`
 
-##### Body Commands _[(ascii protocol)](#r2fx-ascii-protocol)_
+##### Body Commands _[(ascii protocol](#r2fx-ascii-protocol)_
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
 `U(T|B)`         | controls the position of the utility arms T=top, B=bottom | `null` or `0-180` (null == 0)| `[UT145]`

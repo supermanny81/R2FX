@@ -22,13 +22,13 @@ class TimedServos {
 
     typedef struct
     {
-      uint8_t start_pos = 0;
-      uint8_t end_pos = 0;
-      uint8_t curr_pos = 0;
-      uint16_t time_allotted = 0;
+      uint8_t startPos = 0;
+      uint8_t endPos = 0;
+      uint8_t currPos = 0;
+      uint16_t timeAllotted = 0;
       unsigned long millisAtCommand = 0;
-      uint16_t srv_min;
-      uint16_t srv_max;
+      uint16_t srvMin;
+      uint16_t srvMax;
       boolean isInversed = false;
       boolean isDisabled = false;
     }  TimedServo;
@@ -42,8 +42,8 @@ class TimedServos {
     PWMBoard servoBoards[2];
         
   private:
-    void setServoPulse(Adafruit_PWMServoDriver pwm, uint8_t srv_num, uint8_t srv_pos, uint16_t srv_min, uint16_t srv_max);
-    void disableChannel(Adafruit_PWMServoDriver pwm, uint8_t srv_num);
+    void setServoPulse(Adafruit_PWMServoDriver pwm, uint8_t srvNum, uint8_t srvPos, uint16_t srvMin, uint16_t srvMax);
+    void disableChannel(Adafruit_PWMServoDriver pwm, uint8_t srvNum);
     void initializeBodyServoConfig();
     void initializeDomeConfig();
 
@@ -53,7 +53,7 @@ class TimedServos {
     /**
      * Sets the targeted servo position and the amount of time alloted to reach the position.
      */
-    void setServoPosition(uint8_t board, uint8_t channel, uint8_t srv_pos, uint16_t time_alloted);
+    void setServoPosition(uint8_t board, uint8_t channel, uint8_t srvPos, uint16_t timeAlloted);
 
     /**
      * This method needs to be called in a loop and will iterate through any sets of movements that are currently 

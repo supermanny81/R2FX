@@ -6,7 +6,7 @@
 #include "Arduino.h"
 
 //  write a float value to string, outstr is returned string.
-char * FloatToString(char * outstr, float value, int places, int minwidth = 0, bool rightjustify = false) {
+char * floatToString(char * outstr, float value, int places, int minwidth = 0, bool rightjustify = false) {
   int i, digit;
   int c = 0, tenscount = 0, extra = 0;
   int charcount = 1;

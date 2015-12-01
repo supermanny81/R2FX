@@ -56,27 +56,27 @@ void processCmdInput() {
                 switch (cmd.commandBuffer[2]) {
                   case 'C' : {
                       servoCommand(1, SV_PPC, cmd.commandBuffer, 3, 3);
-                      response = "PPC";
+                      response = PSTR("PPC");
                       break;
                     }
                   case '1' : {
                       servoCommand(1, SV_PP1, cmd.commandBuffer, 3, 3);
-                      response = "PP1";
+                      response = PSTR("PP1");
                       break;
                     }
                   case '2' : {
                       servoCommand(1, SV_PP2, cmd.commandBuffer, 3, 3);
-                      response = "PP2";
+                      response = PSTR("PP2");
                       break;
                     }
                   case '5' : {
                       servoCommand(1, SV_PP5, cmd.commandBuffer, 3, 3);
-                      response = "PP5";
+                      response = PSTR("PP5");
                       break;
                     }
                   case '6' : {
                       servoCommand(1, SV_PP6, cmd.commandBuffer, 3, 3);
-                      response = "PP6";
+                      response = PSTR("PP6");
                       break;
                     }
                 }
@@ -84,32 +84,32 @@ void processCmdInput() {
               }
             case '1': {
                 servoCommand(1, SV_P1, cmd.commandBuffer, 2, 3);
-                response = "P1";
+                response = PSTR("P1");
                 break;
               }
             case '2': {
                 servoCommand(1, SV_P2, cmd.commandBuffer, 2, 3);
-                response = "P2";
+                response = PSTR("P2");
                 break;
               }
             case '3': {
                 servoCommand(1, SV_P3, cmd.commandBuffer, 2, 3);
-                response = "P3";
+                response = PSTR("P3");
                 break;
               }
             case '4': {
                 servoCommand(1, SV_P4, cmd.commandBuffer, 2, 3);
-                response = "P4";
+                response = PSTR("P4");
                 break;
               }
             case '7': {
                 servoCommand(1, SV_P7, cmd.commandBuffer, 2, 3);
-                response = "P7";
+                response = PSTR("P7");
                 break;
               }
             case 'A': {
                 servoCommand(1, SV_PA, cmd.commandBuffer, 2, 3);
-                response = "PA";
+                response = PSTR("PA");
                 break;
               }
 
@@ -121,12 +121,12 @@ void processCmdInput() {
           switch (cmd.commandBuffer[1]) {
             case 'P': {
                 char buff[5];
-                response = FloatToString(buff, vd.getVCCInPct(), 2, 0);
+                response = floatToString(buff, vd.getVCCInPct(), 2, 0);
                 break;
               }
             case 'D': {
                 char buff[5];
-                response = FloatToString(buff, vd.getVCC(), 2, 0);
+                response = floatToString(buff, vd.getVCC(), 2, 0);
                 break;
               }
           }
@@ -161,12 +161,12 @@ void processCmdInput() {
           switch (cmd.commandBuffer[1]) {
             case 'T': {
                 servoCommand(0, SV_UA_TOP, cmd.commandBuffer, 2, 3);
-                response = "UT";
+                response = PSTR("UT");
                 break;
               }
             case 'B': {
                 servoCommand(0, SV_UA_BOTTOM, cmd.commandBuffer, 2, 3);
-                response = "UB";
+                response = PSTR("UB");
                 break;
               }
           }
