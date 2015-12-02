@@ -1,8 +1,16 @@
 /**
-  R2FXConfig.h - Stores configuation specific details about your astromech.
-  Copyright (c) 2015 Manny Garcia, written for the R2Builders group
-
-  BSD license, all text above must be included in any redistribution
+ *                ____  ____  _______  __
+ *               |  _ \|___ \|  ___\ \/ /
+ *               | |_) | __) | |_   \  / 
+ *               |  _ < / __/|  _|  /  \ 
+ *               |_| \_\_____|_|   /_/\_\                      
+ *           -------------------------------
+ *            Visual effects control system.
+ *         
+ * R2FXConfig.h - Stores configuation specific details about your astromech.
+ * Copyright (c) 2015 Manny Garcia, written for the R2Builders group
+ * 
+ * BSD license, all text above must be included in any redistribution
 **/
 
 

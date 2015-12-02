@@ -73,9 +73,9 @@ An R2FX message **always** starts with a command byte. The table below outlines 
 
          CMD.,  LEN.,  DATA..............,  CRC
          0xF0,  0x03,  0xA1,  0xC1,  0xF7,  0xCC
-         |_____________________________________|
-                          | |
-          CRC computed from the complete packet.    
+         |_______________________________|
+                       | |
+       CRC computed from the complete packet.    
             
 ```
 
@@ -102,30 +102,33 @@ unsigned byte crc_calc(unsigned byte buffer[], byte size) {
 ```
 
 
-##### Reserved Commands _[(byte protocol)](#r2fx-byte-protocol)_
-Some items and ranges in the command space are reserved or restricted for groups of systems, compatibility reasons, or future expansion.
+##### Reserved Command Ranges _[(byte protocol)](#r2fx-byte-protocol)_
+The ranges in the command space are reserved or restricted for groups of systems, compatibility reasons, or future expansion.
 
-```
+Range (HEX) | Range (DEC) | Purpose
+:-----------|:-----------:|:----------
+`0x00-0x5A` |    0-90     | TBD
+`0x5B`      |     91      | Restricted to maintain compatibility with R2FX serial based protocol
+`0x5C`      |     92      | Restricted
+`0x5D`      |     93      | Restricted to maintain compatibility with R2FX serial based protocol
+`0x5E-0x79` |    94-126   | TBD
+`0x80-0xB2` |   127-178   | Reserved for Dome FX Systems
+`0xB3-0xDA` |   179-219   | Reserved for Body FX Systems
+`0xDB-0xEF` |   220-239   | Reserved for Audio FX Systems
+`0xF0-0xFF` |   240-255   | Reserved for R2FX managment and telemetry
 
-0x5B       RESTRICTED to maintain compatibility with R2FX serial based protocol
-0x5C       RESTRICTED
-0x5D       RESTRICTED to maintain compatibility with R2FX serial based protocol
-
-0x00-0x00  RESERVED
-
-```
 
 ##### Dome Systems _[(byte protocol)](#r2fx-byte-protocol)_
 
 | Command | Description | Length | Parameters  <br>*0-13 bytes* 
 :---------|:------------|:-------|:-----------------------------
- `0xF0`   |             |   0    |        ...     
+ `0x80`   |             |   0    |        ...     
  
 ##### Body Systems _[(byte protocol)](#r2fx-byte-protocol)_
 
 | Command | Description | Length | Parameters  <br>*0-13 bytes* 
 :---------|:------------|:-------|:-----------------------------
- `0xF0`   |             |   0    |        ...     
+ `0xB3`   |             |   0    |        ...     
  
  
  
