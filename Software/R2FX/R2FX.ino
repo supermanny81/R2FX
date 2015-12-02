@@ -116,26 +116,12 @@ void processCmdInput() {
           }
           break;
         }
-      // Check voltage levels
-      case 'V': {
-          switch (cmd.commandBuffer[1]) {
-            case 'P': {
-                char buff[5];
-                response = floatToString(buff, vd.getVCCInPct(), 2, 0);
-                break;
-              }
-            case 'D': {
-                char buff[5];
-                response = floatToString(buff, vd.getVCC(), 2, 0);
-                break;
-              }
-          }
-          break;
-        }
+      // Body Commands
       case 'C': {
           switch (cmd.commandBuffer[1]) {
-            case 'L': {
+            case 'B': {
                 cbi.isCBIEnabled(!cbi.isCBIEnabled());
+                response = (cbi.isCBIEnabled() ? PSTR("CB: True") : PSTR("CB: False"));
                 break;
               }
             case 'R': {
@@ -150,13 +136,19 @@ void processCmdInput() {
                 cbi.isCBIEnabled(tmp);
                 break;
               }
-            case 'S': {
-                response = (cbi.isCBIEnabled() ? "True" : "False");
-                break;
-              }
           }
           break;
         }
+      case 'D': {
+        switch (cmd.commandBuffer[1]) {
+            case 'P': {
+                cbi.isDPLEnabled(!cbi.isDPLEnabled());
+                response = (cbi.isDPLEnabled() ? PSTR("DP: True") : PSTR("DP: False"));
+                break;
+              }
+        }
+        break;
+      }
       case 'U': {
           switch (cmd.commandBuffer[1]) {
             case 'T': {
@@ -167,6 +159,23 @@ void processCmdInput() {
             case 'B': {
                 servoCommand(0, SV_UA_BOTTOM, cmd.commandBuffer, 2, 3);
                 response = PSTR("UB");
+                break;
+              }
+          }
+          break;
+        }
+      // System Commands
+      // Check voltage levels
+      case 'V': {
+          switch (cmd.commandBuffer[1]) {
+            case 'P': {
+                char buff[5];
+                response = floatToString(buff, vd.getVCCInPct(), 2, 0);
+                break;
+              }
+            case 'D': {
+                char buff[5];
+                response = floatToString(buff, vd.getVCC(), 2, 0);
                 break;
               }
           }

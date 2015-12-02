@@ -41,17 +41,25 @@ OK
 ERR
 ```
 
-##### Dome Commands _[(ascii protocol)](#r2fx-ascii-protocol)_
+##### Dome Systems _[(ascii protocol)](#r2fx-ascii-protocol)_
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
 `PPC`            | center pie panel                    | `null` or `0-180` (null == 0)| `[PPC90]`
 `PP(1,2,5,6)`    | pie panels #1,2,3,5,6               | ...                          | `[PP1]`
 `PP(1-4)|(7,8,A)`| panel #1-4, or 7, 8, A (Hex for 10) | ...                          | `[PA0]`
 
-##### Body Commands _[(ascii protocol](#r2fx-ascii-protocol)_
+##### Body Systems _[(ascii protocol](#r2fx-ascii-protocol)_
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
 `U(T|B)`         | controls the position of the utility arms T=top, B=bottom | `null` or `0-180` (null == 0)| `[UT145]`
+`CB`             | enables or disables the charge bay panel , returns it's enabled state| `null` to toggle, or boolean `0|1` | `[CB]`
+`DP`				 | enables or disables the data port logics, returns it's state | ... | `[DP]`
+
+
+##### System Commands _[(ascii protocol](#r2fx-ascii-protocol)_
+Command          | Description                         | Parameters                   | Example
+:----------------|:------------------------------------|:-----------------------------|---------
+`V(P|D)`         | prints the current voltage level in decimal (D) or percent (P) | `null` | `[VP]`
                                                        
 ###<a name="r2fx-byte-protocol"></a>R2FX Byte Protocol _[(top)](#r2fx-ino)_
 ---<i>Work in progress</i>----
@@ -95,25 +103,29 @@ unsigned byte crc_calc(unsigned byte buffer[], byte size) {
 
 
 ##### Reserved Commands _[(byte protocol)](#r2fx-byte-protocol)_
-```
-
-0x5B	Reserved to maintain compatibility with R2FX serial based protocol
-0x5D	Reserved to maintain compatibility with R2FX serial based protocol
+Some items and ranges in the command space are reserved or restricted for groups of systems, compatibility reasons, or future expansion.
 
 ```
 
-##### Dome Commands _[(byte protocol)](#r2fx-byte-protocol)_
+0x5B       RESTRICTED to maintain compatibility with R2FX serial based protocol
+0x5C       RESTRICTED
+0x5D       RESTRICTED to maintain compatibility with R2FX serial based protocol
+
+0x00-0x00  RESERVED
+
+```
+
+##### Dome Systems _[(byte protocol)](#r2fx-byte-protocol)_
 
 | Command | Description | Length | Parameters  <br>*0-13 bytes* 
-:-----------------|:--------------|:---------------|:---
- 0xF0             |    |      0    |        ...      
+:---------|:------------|:-------|:-----------------------------
+ `0xF0`   |             |   0    |        ...     
  
- 
-##### Body Servos _[(byte protocol)](#r2fx-byte-protocol)_
+##### Body Systems _[(byte protocol)](#r2fx-byte-protocol)_
 
 | Command | Description | Length | Parameters  <br>*0-13 bytes* 
-:-----------------|:--------------|:---------------|:---
- 0xF0             |    |      0    |        ...      
+:---------|:------------|:-------|:-----------------------------
+ `0xF0`   |             |   0    |        ...     
  
  
  
