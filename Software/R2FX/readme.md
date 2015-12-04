@@ -4,13 +4,19 @@
 This software is used to control the auxilary functions in an astromech.  Control over compnonents like a panel or lighting system may be directly controlled through here, however more importantly the goal of this project is to expose the capability of creating new sequences and sharing them with other astromech builders. 
 
 
-[**Hardware**](#r2fx-hardware) - A description of the hardware necessary to run R2FX.
+- [Hardware](#r2fx-hardware) - A description of the hardware necessary to run R2FX.
+- [R2FXConfig.h](#r2fx-configuration) - Contains all of the configurations used to build the project. This is the only file that **needs** be edited by end users.
+- [R2FX ASCII Protocol](#r2fx-ascii-protocol), [R2FX Byte Protocol](#r2fx-byte-protocol) - A description of the protocols used to communicate to the R2FX control system.
+- [Sequence Storage](#r2fx-sequence-storage) - A description of how R2FX sequences are stored and retrieved.
 
-[**R2FXConfig.h** ](#r2fx-configuration) - Contains all of the configurations used to build the project. This is the only file that **needs** be edited by end users.
+###<a name="r2fx-hardware"></a>Hardware
 
-[**R2FX ASCII Protocol**](#r2fx-ascii-protocol), [**R2FX Byte Protocol**](#r2fx-byte-protocol) - A description of the protocols used to communicate to the R2FX control system.
+- [Bluefruit Shield](https://www.adafruit.com/products/2746)
+- [32Kb I2C FRAM Chip](https://www.adafruit.com/products/1895)
+- [Arduino Uno](https://www.adafruit.com/products/50)
+- [Adafruit I2C Servo Driver](https://www.adafruit.com/products/815)
 
-###<a name="r2fx-ascii-protocol"></a>R2FX ASCII Protocol _[(top)](#r2fx-ino)_
+###<a name="r2fx-ascii-protocol"></a>R2FX ASCII Protocol _[..](#r2fx-ino)_
 
 An ASCII based protocol to interact with the R2FX system.  While this protocol provides an 'simpler and easier' way of issuing commands, it will only ever exist for testing and demo purposes and most likely will never be a complete implementation of the prefferred byte based protocol which is more robust, concise and allows for 'sequences' of commands to be stored in FRAM.
 
@@ -41,14 +47,14 @@ OK
 ERR
 ```
 
-##### Dome Systems _[(ascii protocol)](#r2fx-ascii-protocol)_
+##### Dome Systems _[..](#r2fx-ascii-protocol)_
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
 `PPC`            | center pie panel                    | `null` or `0-180` (null == 0)| `[PPC90]`
 `PP(1,2,5,6)`    | pie panels #1,2,3,5,6               | ...                          | `[PP1]`
 `PP(1-4)|(7,8,A)`| panel #1-4, or 7, 8, A (Hex for 10) | ...                          | `[PA0]`
 
-##### Body Systems _[(ascii protocol](#r2fx-ascii-protocol)_
+##### Body Systems _[..](#r2fx-ascii-protocol)_
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
 `U(T|B)`         | controls the position of the utility arms T=top, B=bottom | `null` or `0-180` (null == 0)| `[UT145]`
@@ -56,19 +62,23 @@ Command          | Description                         | Parameters             
 `DP`				 | enables or disables the data port logics, returns it's state | ... | `[DP]`
 
 
-##### System Commands _[(ascii protocol](#r2fx-ascii-protocol)_
+##### System Commands _[..](#r2fx-ascii-protocol)_
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
 `V(P|D)`         | prints the current voltage level in decimal (D) or percent (P) | `null` | `[VP]`
                                                        
-###<a name="r2fx-byte-protocol"></a>R2FX Byte Protocol _[(top)](#r2fx-ino)_
----<i>Work in progress</i>----
+###<a name="r2fx-byte-protocol"></a>R2FX Byte Protocol _[..](#r2fx-ino)_
+>_---Work in progress----_
+
+[Message](#r2fx-byte-message)  | [CRC](#r2fx-byte-crc)  |  [Reserved Command Ranges](#r2fx-reserved-commands)  |  [Dome Systems]()  |  [Body Systems]()  |  [Audio Systems]()  | [R2FX Management]()
+
+
 
 A R2FX command and its data parameters are refferred to as an R2FX message . The minimum size of a message is 3 bytes *(one command byte, a length parameter signed 8 bit integer (-1) with no parameter (data) bytes), and a CRC field*. The maximum size of a R2FX message currently can be up to 16 bytes, however in practice this should rarely happen and in theory could be expanded to 130 bytes (CMD + LEN + 127 bytes + CRC). 
 
 An R2FX message **always** starts with a command byte. The table below outlines the possible command types that may be used when using R2FX.
 
-##### R2FX Message Format _[(byte protocol)](#r2fx-byte-protocol)_
+#####<a name="r2fx-byte-message"></a> R2FX Message Format _[..](#r2fx-byte-protocol)_
 ```
 
          CMD.,  LEN.,  DATA..............,  CRC
@@ -79,7 +89,7 @@ An R2FX message **always** starts with a command byte. The table below outlines 
             
 ```
 
-##### R2FX CRC _[(byte protocol)](#r2fx-byte-protocol)_
+#####<a name="r2fx-byte-crc"></a> R2FX CRC _[..](#r2fx-byte-protocol)_
 
 ```
 const byte CRC_INIT = 0xF0;
@@ -102,7 +112,7 @@ unsigned byte crc_calc(unsigned byte buffer[], byte size) {
 ```
 
 
-##### Reserved Command Ranges _[(byte protocol)](#r2fx-byte-protocol)_
+#####<a name="r2fx-reserved-commands"></a> Reserved Command Ranges _[..](#r2fx-byte-protocol)_
 The ranges in the command space are reserved or restricted for groups of systems, compatibility reasons, or future expansion.
 
 Range (HEX) | Range (DEC) | Purpose
@@ -118,19 +128,86 @@ Range (HEX) | Range (DEC) | Purpose
 `0xF0-0xFF` |   240-255   | Reserved for R2FX managment and telemetry
 
 
-##### Dome Systems _[(byte protocol)](#r2fx-byte-protocol)_
+#####<a name="r2fx-byte-dome"></a> Dome Systems _[..](#r2fx-byte-protocol)_
 
 | Command | Description | Length | Parameters  <br>*0-13 bytes* 
 :---------|:------------|:-------|:-----------------------------
  `0x80`   |             |   0    |        ...     
  
-##### Body Systems _[(byte protocol)](#r2fx-byte-protocol)_
+#####<a name="r2fx-byte-body"></a> Body Systems _[..](#r2fx-byte-protocol)_
 
 | Command | Description | Length | Parameters  <br>*0-13 bytes* 
 :---------|:------------|:-------|:-----------------------------
  `0xB3`   |             |   0    |        ...     
- 
- 
- 
 
 
+#####<a name="r2fx-byte-audio"></a> Audo Systems _[..](#r2fx-byte-protocol)_
+
+| Command | Description | Length | Parameters  <br>*0-13 bytes* 
+:---------|:------------|:-------|:-----------------------------
+ `0xDB`   |             |   0    |        ...     
+ 
+#####<a name="r2fx-byte-t2fx"></a> R2FX Systems _[..](#r2fx-byte-protocol)_
+
+| Command | Description | Length | Parameters  <br>*0-13 bytes* 
+:---------|:------------|:-------|:-----------------------------
+ `0xB3`   |             |   0    |        ...     
+
+###<a name="r2fx-sequence-storage"></a>Storage of Sequences via FRAM Module _[..](#r2fx-ino)_ 
+
+Storage and retrieval of R2FX sequences use FRAM. This avoids the need to allocate a large buffer to read SD cards, while also sequences to written over and over without the worry of damaging the chip (EEPROM).  Due to the limited amount of space (32k), sequences are stored in the binary format. 
+
+##### Config Block 16 bytes 0x00-0x0F 
+Offset | Length   | Description
+-------|----------|-------------
+0x00   | 1 byte   | version (1)
+0x01   | 1 byte   | number of bytes per block (default 8)
+0x02   | 1 byte   | number of blocks per cluster (default 4)
+0x03   | 2 bytes  | start cluster
+0x05   | 2 bytes  | number of clusters (1000)
+0x07   | 2 bytes  | size of device (32,000 bytes)
+0x09   | 2 bytes  | number of files
+Data Start
+
+##### File Allocation Entry 0x10-0x7DA (2kB for 32kB device) 
+Offset | Length   | Description
+-------|----------|-------------
+0x00   | 2 bytes  | Next cluster (0x0001 if end of file)
+
+
+##### File Entries 0x7DB-0xFDA (2048 bytes for 128 files)
+Offset | Length   | Description
+-------|----------|-------------
+0x00   | 1 byte   | unique file ID (0-255)
+0x08   | 1 byte   | file type
+0x09   | 8 bytes  | file name
+0x0A   | 2 bytes  | reserved
+0x0C   | 2 bytes  | start cluster
+0x1E   | 2 bytes  | file size in bytes
+
+##### Data Clusters 0xFDB-0x7CF0
+Offset | Length   | Description
+-------|----------|-------------
+0x00   | 16 bytes | data...
+
+#### Visual Representation of R2FS
+
+```
+(Each cell represents 16 bytes, each row represents 1 kilo byte)
+
+C = Config Block
+A = File Allocation Entry
+D = Data Clusters 
+
+CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FFFFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+... x 26 more kB of data.
+
+
+```
+
+ 
