@@ -161,8 +161,6 @@ Storage and retrieval of R2FX sequences use FRAM. This avoids the need to alloca
 
 ```
 
-(Each cell represents 16 bytes, each row represents 1 kilo byte)
-
 C = configuration block
 A = file allocation entry
 F = file entries
@@ -177,6 +175,7 @@ FFFFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
 ... x 26 more kB of data.
 
+(Each cell represents 16 bytes, each row represents 1 kilo byte)
 
 ```
 
