@@ -117,15 +117,15 @@ The ranges in the command space are reserved or restricted for groups of systems
 
 Range (HEX) | Range (DEC) | Purpose
 :-----------|:-----------:|:----------
-`0x00-0x5A` |    0-90     | TBD
-`0x5B`      |     91      | Restricted to maintain compatibility with R2FX serial based protocol
-`0x5C`      |     92      | Restricted
-`0x5D`      |     93      | Restricted to maintain compatibility with R2FX serial based protocol
-`0x5E-0x79` |    94-126   | TBD
-`0x80-0xB2` |   127-178   | Reserved for Dome FX Systems
-`0xB3-0xDA` |   179-219   | Reserved for Body FX Systems
-`0xDB-0xEF` |   220-239   | Reserved for Audio FX Systems
-`0xF0-0xFF` |   240-255   | Reserved for R2FX managment and telemetry
+`0x00-0x5A` |    0-90     | tbd
+`0x5B`      |     91      | restricted to maintain compatibility with R2FX serial based protocol
+`0x5C`      |     92      | restricted
+`0x5D`      |     93      | restricted to maintain compatibility with R2FX serial based protocol
+`0x5E-0x79` |    94-126   | tbd
+`0x80-0xB2` |   127-178   | reserved for Dome FX systems
+`0xB3-0xDA` |   179-219   | reserved for Body FX systems
+`0xDB-0xEF` |   220-239   | reserved for Audio FX systems
+`0xF0-0xFF` |   240-255   | reserved for R2FX managment and telemetry
 
 
 #####<a name="r2fx-byte-dome"></a> Dome Systems _[..](#r2fx-byte-protocol)_
@@ -153,11 +153,34 @@ Range (HEX) | Range (DEC) | Purpose
 :---------|:------------|:-------|:-----------------------------
  `0xB3`   |             |   0    |        ...     
 
-###<a name="r2fx-sequence-storage"></a>Storage of Sequences via FRAM Module _[..](#r2fx-ino)_ 
+###<a name="r2fx-r2fs"></a>Storage of Sequences via FRAM Module _[..](#r2fx-ino)_ 
 
 Storage and retrieval of R2FX sequences use FRAM. This avoids the need to allocate a large buffer to read SD cards, while also sequences to written over and over without the worry of damaging the chip (EEPROM).  Due to the limited amount of space (32k), sequences are stored in the binary format. 
 
-##### Config Block 16 bytes 0x00-0x0F 
+#### Visual Representation of R2FS _[..](#r2fx-r2fs)_ 
+
+```
+
+(Each cell represents 16 bytes, each row represents 1 kilo byte)
+
+C = configuration block
+A = file allocation entry
+F = file entries
+D = data clusters 
+
+-------------------- 32 kB Memory Chip ---------------------
+CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+FFFFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+... x 26 more kB of data.
+
+
+```
+
+##### Config Block 16 bytes 0x00-0x0F _[..](#r2fx-r2fs)_ 
 Offset | Length   | Description
 -------|----------|-------------
 0x00   | 1 byte   | version (1)
@@ -169,13 +192,13 @@ Offset | Length   | Description
 0x09   | 2 bytes  | number of files
 Data Start
 
-##### File Allocation Entry 0x10-0x7DA (2kB for 32kB device) 
+##### File Allocation Entry 0x10-0x7DA _(2kB for 32kB device)_ _[..](#r2fx-r2fs)_ 
 Offset | Length   | Description
 -------|----------|-------------
 0x00   | 2 bytes  | Next cluster (0x0001 if end of file)
 
 
-##### File Entries 0x7DB-0xFDA (2048 bytes for 128 files)
+##### File Entries 0x7DB-0xFDA _(2048 bytes for 128 files)_ _[..](#r2fx-r2fs)_ 
 Offset | Length   | Description
 -------|----------|-------------
 0x00   | 1 byte   | unique file ID (0-255)
@@ -184,30 +207,10 @@ Offset | Length   | Description
 0x0A   | 2 bytes  | reserved
 0x0C   | 2 bytes  | start cluster
 0x1E   | 2 bytes  | file size in bytes
-
-##### Data Clusters 0xFDB-0x7CF0
+ 
+##### Data Clusters 0xFDB-0x7CF0 _[..](#r2fx-r2fs)_ 
 Offset | Length   | Description
 -------|----------|-------------
 0x00   | 16 bytes | data...
-
-#### Visual Representation of R2FS
-
-```
-(Each cell represents 16 bytes, each row represents 1 kilo byte)
-
-C = Config Block
-A = File Allocation Entry
-D = Data Clusters 
-
-CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-FFFFDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-... x 26 more kB of data.
-
-
-```
 
  
