@@ -155,7 +155,7 @@ Range (HEX) | Range (DEC) | Purpose
 
 ###<a name="r2fx-r2fs"></a>Storage of Sequences via FRAM Module _[..](#r2fx-ino)_ 
 
-Storage and retrieval of R2FX sequences use FRAM. This avoids the need to allocate a large buffer to read SD cards, while also sequences to written over and over without the worry of damaging the chip (EEPROM).  Due to the limited amount of space (32k), sequences are stored in the binary format. 
+Storage and retrieval of R2FX sequences use FRAM. This avoids the need to allocate a large buffer to read SD cards, while also sequences to written over and over without the worry of damaging the chip (EEPROM).  Due to the limited amount of space (32k), sequences are stored in the binary format using R2FS, a simple file system targeted towards efficient management of astromech sequences and other file based needs.
 
 #### Visual Representation of R2FS _[..](#r2fx-r2fs)_ 
 
@@ -200,7 +200,7 @@ Offset | Length   | Description
 ##### File Entries 0x7DB-0xFDA _(2048 bytes for 128 files)_ _[..](#r2fx-r2fs)_ 
 Offset | Length   | Description
 -------|----------|-------------
-0x00   | 1 byte   | unique file ID (0-255)
+0x00   | 1 byte   | unique file ID (1-255)
 0x08   | 1 byte   | file type
 0x09   | 8 bytes  | file name
 0x0A   | 2 bytes  | reserved
