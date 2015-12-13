@@ -7,13 +7,14 @@ This software is used to control the auxilary functions in an astromech.  Contro
 - [Hardware](#r2fx-hardware) - A description of the hardware necessary to run R2FX.
 - [R2FXConfig.h](#r2fx-configuration) - Contains all of the configurations used to build the project. This is the only file that **needs** be edited by end users.
 - [R2FX ASCII Protocol](#r2fx-ascii-protocol), [R2FX Byte Protocol](#r2fx-byte-protocol) - A description of the protocols used to communicate to the R2FX control system.
-- [Sequence Storage](#r2fx-sequence-storage) - A description of how R2FX sequences are stored and retrieved.
+- [Sequence Storage (R2FS)](#r2fx-r2fs) - A description of how R2FX sequences are stored and retrieved.
 
 ###<a name="r2fx-hardware"></a>Hardware
 
+
 - [Bluefruit Shield](https://www.adafruit.com/products/2746)
 - [32Kb I2C FRAM Chip](https://www.adafruit.com/products/1895)
-- [Arduino Uno](https://www.adafruit.com/products/50)
+- [Arduino Uno](https://www.adafruit.com/products/50) or compatble board.
 - [Adafruit I2C Servo Driver](https://www.adafruit.com/products/815)
 
 ###<a name="r2fx-ascii-protocol"></a>R2FX ASCII Protocol _[..](#r2fx-ino)_

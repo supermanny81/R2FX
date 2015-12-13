@@ -42,13 +42,16 @@ class TimedServos {
     PWMBoard servoBoards[2];
         
   private:
+      TimedServos();
+    TimedServos(TimedServos const&); // copy disabled
+    void operator=(TimedServos const&); // assigment disabled 
     void setServoPulse(Adafruit_PWMServoDriver pwm, uint8_t srvNum, uint8_t srvPos, uint16_t srvMin, uint16_t srvMax);
     void disableChannel(Adafruit_PWMServoDriver pwm, uint8_t srvNum);
     void initializeBodyServoConfig();
     void initializeDomeConfig();
 
   public:
-    TimedServos();
+    static TimedServos* getInstance();
 
     /**
      * Sets the targeted servo position and the amount of time alloted to reach the position.
@@ -59,7 +62,7 @@ class TimedServos {
      * This method needs to be called in a loop and will iterate through any sets of movements that are currently 
      * in action or disable a servo once it has reached it position for the defined period of time.
      */
-    void processMovements();
+    void loop();
 
     /**
      * Configures the TimedServo classes, boards and thier assignments.  This method must be called 

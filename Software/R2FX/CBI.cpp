@@ -12,10 +12,16 @@
 #include "CBI.h"
 #include "R2FXConfig.h"
 
+CBI* CBI::getInstance() {
+    static CBI cbi;
+    return &cbi;
+
+    };
+    
 /**
 Initialize the displays by seting the brightness and clearing the display, just in case.
 */
-CBI::CBI() {
+void CBI::setup() {
   for (int i=0; i < LC_NUM_DEVICES; i++) {
     lc.shutdown(i, false);
     lc.setIntensity(i, BODY_DISPLAY_INTENSITY);
@@ -120,6 +126,15 @@ void CBI::isDPLEnabled(bool enable) {
   }
   lc.shutdown(1, !enable);
   hasDPLOn = enable;
+}
+
+void CBI::loop() {
+  if (isCBIEnabled()) {
+    randomCBISeq(vd->getVCCInPct());
+  }
+  if (isDPLEnabled()) {
+    randomDPLSeq();
+  }
 }
 
 bool CBI::isCBIEnabled() {

@@ -28,7 +28,7 @@ class VoltageDivider {
     * minVolts      Discharged battery voltage
     * maxVolts      Fully charged battery voltage
     */
-    VoltageDivider(int analogVin, float resistor1, float resistor2, float minVolts, float maxVolts);
+    void setup(int analogVin, float resistor1, float resistor2, float minVolts, float maxVolts);
 
     /**
     * Returns the measured voltage from the supply
@@ -41,7 +41,12 @@ class VoltageDivider {
     */
     int getVCCInPct();
 
+    static VoltageDivider* getInstance();
   private:
+    VoltageDivider();
+    VoltageDivider(VoltageDivider const&); // copy disabled
+    void operator=(VoltageDivider const&); // assigment disabled 
+    
     byte ANALOG_VIN;
     float RESISTOR_1;
     float RESISTOR_2;

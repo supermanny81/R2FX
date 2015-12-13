@@ -12,12 +12,17 @@
 
 TimedServos::TimedServos() {}
 
+TimedServos* TimedServos::getInstance() {
+  static TimedServos ts;
+  return &ts;  
+}
+
 void TimedServos::setup() {
   initializeBodyServoConfig();
   initializeDomeConfig();
 }
 
-void TimedServos::initializeBodyServoConfig() {
+void TimedServos::initializeBodyServoConfig() {  
   // Configure body system
   servoBoards[0].pwm.begin();
   servoBoards[0].pwm.setPWMFreq(BODY_PWM_SHIELD_SERVO_FREQ);
@@ -128,7 +133,19 @@ void TimedServos::setServoPosition(uint8_t board, uint8_t channel, uint8_t srvPo
   servoBoards[board].channels[channel].isDisabled = false;
 }
 
-void TimedServos::processMovements() {
+void TimedServos::setServoPulse(Adafruit_PWMServoDriver pwm, uint8_t srvNum, uint8_t srvPos, uint16_t srvMin, uint16_t srvMax) {
+  if (srvPos > 180) {
+    srvPos = 180;
+  }
+  uint16_t pulselength = map(srvPos, 0, 180, srvMin, srvMax);
+  pwm.setPWM(srvNum, 0, pulselength);
+}
+
+void TimedServos::disableChannel(Adafruit_PWMServoDriver pwm, uint8_t srvNum) {
+  pwm.setPWM(srvNum, 0, 0);
+}
+
+void TimedServos::loop() {
   for (uint8_t board = 0; board < 2; board++) {
     for (uint8_t channel = 0; channel < 16; channel++) {
       unsigned long timeElapsed = (millis() - servoBoards[board].channels[channel].millisAtCommand);
@@ -150,16 +167,4 @@ void TimedServos::processMovements() {
       }
     }
   }
-}
-
-void TimedServos::setServoPulse(Adafruit_PWMServoDriver pwm, uint8_t srvNum, uint8_t srvPos, uint16_t srvMin, uint16_t srvMax) {
-  if (srvPos > 180) {
-    srvPos = 180;
-  }
-  uint16_t pulselength = map(srvPos, 0, 180, srvMin, srvMax);
-  pwm.setPWM(srvNum, 0, pulselength);
-}
-
-void TimedServos::disableChannel(Adafruit_PWMServoDriver pwm, uint8_t srvNum) {
-  pwm.setPWM(srvNum, 0, 0);
 }

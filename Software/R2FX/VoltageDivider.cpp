@@ -7,7 +7,7 @@
 
 #include "VoltageDivider.h"
 
-VoltageDivider::VoltageDivider(int analogVin, float resistor1, float resistor2, float minVolts, float maxVolts) {
+void VoltageDivider::setup(int analogVin, float resistor1, float resistor2, float minVolts, float maxVolts) {
   ANALOG_VIN = analogVin;
   RESISTOR_1 = resistor1;
   RESISTOR_2 = resistor2;
@@ -27,3 +27,11 @@ int VoltageDivider::getVCCInPct() {
   vin = vin == 0 ? MIN_VOLTS : vin;
   return ((vin - MIN_VOLTS) / (MAX_VOLTS - MIN_VOLTS)) * 100.0;
 }
+
+VoltageDivider* VoltageDivider::getInstance() {
+  static VoltageDivider vd;
+  return &vd;
+}
+
+VoltageDivider::VoltageDivider() {}
+

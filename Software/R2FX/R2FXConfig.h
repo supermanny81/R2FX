@@ -22,6 +22,12 @@
 #define SERIAL_BAUD_RATE 250000
 // Random Seed Config
 #define ANALOG_PIN_SEED 5
+// Bluetooth shield configuration
+//Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST)
+
+#define BLUEFRUIT_SPI_CS 8
+#define BLUEFRUIT_SPI_IRQ 7 
+#define BLUEFRUIT_SPI_RST 6
 
 /** Auto Dome **/
 #define AUTO_DOME_ANALOG_PIN 1
