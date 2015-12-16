@@ -41,7 +41,7 @@ private:
 
 public:
   void handleMessage(char *cmd);
-  virtual void messageLoop();
+  virtual void loop();
 };
 #endif
 

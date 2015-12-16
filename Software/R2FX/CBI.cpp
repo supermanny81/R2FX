@@ -8,15 +8,14 @@
   BSD license, all text above must be included in any redistribution
 **/
 
-#include "LedControl.h"
+#include "LedControl2.h"
 #include "CBI.h"
 #include "R2FXConfig.h"
 
 CBI* CBI::getInstance() {
     static CBI cbi;
     return &cbi;
-
-    };
+};
     
 /**
 Initialize the displays by seting the brightness and clearing the display, just in case.

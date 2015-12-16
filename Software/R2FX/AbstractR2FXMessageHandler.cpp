@@ -31,7 +31,7 @@ void AbstractR2FXMessageHandler::processByte(byte incomingByte) {
   
   if (cmdIndex == 16) {
     clearCommand();
-    returnSerialStatus(1, NULL);
+    returnStatus(1, NULL);
   }
 }
 
@@ -43,7 +43,7 @@ void AbstractR2FXMessageHandler::clearCommand() {
   transport = UNKNOWN_TRANSPORT;
 }
 
-void AbstractR2FXMessageHandler::returnSerialStatus(byte exitCode, const char *msg) {
+void AbstractR2FXMessageHandler::returnStatus(byte exitCode, const char *msg) {  
   if (msg != '\0') {
     Serial.println(msg);
   }

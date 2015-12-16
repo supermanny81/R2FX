@@ -15,7 +15,17 @@
 #endif
 
 class VoltageDivider {
-
+  private:
+    VoltageDivider();
+    VoltageDivider(VoltageDivider const&); // copy disabled
+    void operator=(VoltageDivider const&); // assigment disabled 
+    
+    byte ANALOG_VIN;
+    float RESISTOR_1;
+    float RESISTOR_2;
+    float MIN_VOLTS;
+    float MAX_VOLTS;
+    
   public:
 
     /**
@@ -42,16 +52,6 @@ class VoltageDivider {
     int getVCCInPct();
 
     static VoltageDivider* getInstance();
-  private:
-    VoltageDivider();
-    VoltageDivider(VoltageDivider const&); // copy disabled
-    void operator=(VoltageDivider const&); // assigment disabled 
-    
-    byte ANALOG_VIN;
-    float RESISTOR_1;
-    float RESISTOR_2;
-    float MIN_VOLTS;
-    float MAX_VOLTS;
 
 };
 

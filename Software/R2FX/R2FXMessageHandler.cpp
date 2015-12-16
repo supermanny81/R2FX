@@ -159,7 +159,7 @@ uint8_t R2FXMessageHandler::toInt(char *arr, uint8_t pos, uint8_t nBytes) {
   return work.toInt();
 }
 
-void R2FXMessageHandler::messageLoop() {
+void R2FXMessageHandler::loop() {
   if (state != WAIT) {
     byte incommingByte;
     if ((transport == UNKNOWN_TRANSPORT && ble.available() > 0) || transport == BLE_TRANSPORT) {
@@ -177,9 +177,7 @@ void R2FXMessageHandler::messageLoop() {
     handleMessage(commandBuffer);
 
     // return exit code and clean up
-    returnSerialStatus(exitCode, response);
+    returnStatus(exitCode, response);
     clearCommand();
   }
 }
-
-

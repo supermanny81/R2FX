@@ -18,7 +18,7 @@
 class AbstractR2FXMessageHandler {
   private:
     byte cmdIndex = 0; // never greater than 16
-
+    
   public:
     enum CmdState {
       RECEIVING, EMPTY, WAIT
@@ -45,15 +45,15 @@ class AbstractR2FXMessageHandler {
     void processByte(byte incomingByte);
 
     /**
-    * Once a command has been processed, clear it so another can be processed.
+    * Once a command has been processed, clear the state of the message handler so another can be processed.
     */
     void clearCommand();
 
     /**
-    * Utility method to return the state of the command being processd.
+    * Utility method to return the state of the command being processd via the serial interface.
     */
-    void returnSerialStatus(byte exitCode, const char *msg);
+    void returnStatus(byte exitCode, const char *msg);
 
-    virtual void messageLoop();
+    virtual void loop();
 };
 #endif // Command_Parser_h

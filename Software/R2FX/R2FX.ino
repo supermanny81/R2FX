@@ -22,7 +22,6 @@
 #include <Adafruit_BluefruitLE_SPI.h>
 #include <Adafruit_PWMServoDriver.h>
 #include <Adafruit_FRAM_I2C.h>
-#include "LedControl.h"
 #include "Wire.h"
 #include "CBI.h"
 #include "VoltageDivider.h"
@@ -35,6 +34,9 @@ CBI* cbi = CBI::getInstance();
 TimedServos* ts = TimedServos::getInstance();
 R2FXMessageHandler message = R2FXMessageHandler();
 
+/**
+ * Setup for each of R2 subsystems here, each 
+ */
 void setup() {
   // initialize random seed with reading from a PIN that is not used.
   randomSeed(analogRead(ANALOG_PIN_SEED));
@@ -53,7 +55,7 @@ void setup() {
 }
 
 void loop() {
-  message.messageLoop();
+  message.loop();
   ts->loop();
   cbi->loop();
 }

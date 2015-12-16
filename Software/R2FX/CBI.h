@@ -17,7 +17,7 @@
 #include <WProgram.h>
 #endif
 
-#include "LedControl.h"
+#include "LedControl2.h"
 #include "R2FXConfig.h"
 #include "VoltageDivider.h"
 
@@ -26,17 +26,26 @@ class CBI {
     CBI() {};
     CBI(CBI const&); // copy disabled
     void operator=(CBI const&); // assigment disabled
-    LedControl lc = LedControl(SPI_DATA_PIN, SPI_CLOCK_PIN, SPI_CS_PIN, LC_NUM_DEVICES);
+    
+    LedControl2 lc = LedControl2(SPI_DATA_PIN, SPI_CLOCK_PIN, SPI_CS_PIN, LC_NUM_DEVICES);
     unsigned long lastCBIUpdate = millis();
     unsigned long lastDPLUpdate = millis();
-    char characters[26];
     bool hasCBIOn = false;
     bool hasDPLOn = false;
+    
     VoltageDivider* vd = VoltageDivider::getInstance();
 
   public:
+
+    /**
+     * Returns the instance of this class.  We want to prevent multiple copies of this class 
+     * being instatiated and taking memory.
+     */
     static CBI* getInstance();
-    
+
+    /**
+     * Used to configure the class, this should be called only once.
+     */
     void setup();
 
     enum DisplayState {
@@ -77,6 +86,9 @@ class CBI {
     */
     bool isCBIEnabled();
 
+    /**
+     * Gets the current state of the Data Port Logics display.
+     */
     bool isDPLEnabled();
 
     /**
@@ -86,6 +98,9 @@ class CBI {
 
     void heartSEQ();
 
+    /**
+     * Processes any updates to the CBI and DP using a cycle in the loop.
+     */
     void loop();
 
 };
