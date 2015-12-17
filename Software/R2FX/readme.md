@@ -51,15 +51,19 @@ ERR
 ##### Dome Systems _[..](#r2fx-ascii-protocol)_
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
-`PPC`            | center pie panel                    | `null` or `0-180` (null == 0)| `[PPC90]`
+`PPC`            | center pie panel                    | `null` or `0-127` (null == 0)| `[PPC90]`
 `PP(1,2,5,6)`    | pie panels #1,2,3,5,6               | ...                          | `[PP1]`
-`PP(1-4)|(7,8,A)`| panel #1-4, or 7, 8, A (Hex for 10) | ...                          | `[PA0]`
+`P(1-4)|(7,8,A)`| panel #1-4, or 7, 8, A (Hex for 10) | ...                          | `[PA0]`
+
+
+!(Front Body Descriptions)
+[../../Media/front_body.png]
 
 ##### Body Systems _[..](#r2fx-ascii-protocol)_
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
-`U(T|B)`         | controls the position of the utility arms T=top, B=bottom | `null` or `0-180` (null == 0)| `[UT145]`
-`CB`             | enables or disables the charge bay panel , returns it's enabled state| `null` to toggle, or boolean `0|1` | `[CB]`
+`U(T|B)`         | controls the position of the utility arms T=top, B=bottom | `null` or `0-127` (null == 0)| `[UT145]`
+`CB`             | enables or disables the charge bay panel , returns it's enabled state| `null` to set to false, or boolean `0|1` | `[CB]`
 `DP`				 | enables or disables the data port logics, returns it's state | ... | `[DP]`
 
 
