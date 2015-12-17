@@ -14,7 +14,7 @@ TimedServos::TimedServos() {}
 
 TimedServos* TimedServos::getInstance() {
   static TimedServos ts;
-  return &ts;  
+  return &ts;
 }
 
 void TimedServos::setup() {
@@ -22,7 +22,7 @@ void TimedServos::setup() {
   initializeDomeConfig();
 }
 
-void TimedServos::initializeBodyServoConfig() {  
+void TimedServos::initializeBodyServoConfig() {
   // Configure body system
   servoBoards[0].pwm.begin();
   servoBoards[0].pwm.setPWMFreq(BODY_PWM_SHIELD_SERVO_FREQ);
@@ -117,10 +117,10 @@ void TimedServos::initializeDomeConfig() {
 }
 
 void TimedServos::setServoPosition(uint8_t board, uint8_t channel, uint8_t srvPos, uint16_t timeAllotted) {
-  srvPos = srvPos > 180 ? 180 : srvPos;
+  srvPos = srvPos > 127 ? 127 : srvPos;
   // change target servo position for inversed servos
   if (servoBoards[board].channels[channel].isInversed)
-    srvPos = map( srvPos, 0, 180, 180, 0);
+    srvPos = map( srvPos, 0, 127, 127, 0);
 
   // makes sure we don't attempt to make the servos travel faster than possible
   uint16_t min_travel_time = abs(servoBoards[board].channels[channel].currPos - srvPos) * PWM_MAX_TRAVEL_PER_MILLI;
@@ -134,10 +134,10 @@ void TimedServos::setServoPosition(uint8_t board, uint8_t channel, uint8_t srvPo
 }
 
 void TimedServos::setServoPulse(Adafruit_PWMServoDriver pwm, uint8_t srvNum, uint8_t srvPos, uint16_t srvMin, uint16_t srvMax) {
-  if (srvPos > 180) {
-    srvPos = 180;
+  if (srvPos > 127) {
+    srvPos = 127;
   }
-  uint16_t pulselength = map(srvPos, 0, 180, srvMin, srvMax);
+  uint16_t pulselength = map(srvPos, 0, 127, srvMin, srvMax);
   pwm.setPWM(srvNum, 0, pulselength);
 }
 
@@ -150,13 +150,13 @@ void TimedServos::loop() {
     for (uint8_t channel = 0; channel < 16; channel++) {
       unsigned long timeElapsed = (millis() - servoBoards[board].channels[channel].millisAtCommand);
       if (servoBoards[board].channels[channel].currPos != servoBoards[board].channels[channel].endPos) {
-        
+
         if (servoBoards[board].channels[channel].endPos > servoBoards[board].channels[channel].startPos) {
           uint8_t degree = map(timeElapsed, 0, servoBoards[board].channels[channel].timeAllotted, servoBoards[board].channels[channel].startPos, servoBoards[board].channels[channel].endPos);
-          servoBoards[board].channels[channel].currPos = (degree > 180) ? 180 : degree;
+          servoBoards[board].channels[channel].currPos = (degree > 127) ? 127 : degree;
         } else {
           uint8_t degree = map(timeElapsed, 0, servoBoards[board].channels[channel].timeAllotted, servoBoards[board].channels[channel].startPos, servoBoards[board].channels[channel].endPos);
-          servoBoards[board].channels[channel].currPos =  (degree  > 180) ? 0 : degree;
+          servoBoards[board].channels[channel].currPos =  (degree  > 127) ? 0 : degree;
         }
         setServoPulse(servoBoards[board].pwm, channel, servoBoards[board].channels[channel].currPos, servoBoards[board].channels[channel].srvMin, servoBoards[board].channels[channel].srvMax);
       } else if (timeElapsed > (servoBoards[board].channels[channel].timeAllotted + 500)
