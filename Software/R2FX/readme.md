@@ -59,8 +59,7 @@ Command          | Description                         | Parameters             
 
 Body sytem commands cover lighting, non directional movement, servos and more.  To illustrate the abbreviated terms to locations on the astromech see the diagram below.  The names of these components are used to control the astromech using the ASCII based protocol.
 
-![Front Body Descriptions]
-(../../Media/R2FX_Terminology.jpg)
+![Front Body Descriptions](../../Media/R2FX_Terminology.jpg)
 
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
