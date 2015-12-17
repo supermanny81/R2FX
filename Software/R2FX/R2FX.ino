@@ -29,13 +29,14 @@
 #include "TimedServos.h"
 #include "Utility.h"
 #include "R2FXMessageHandler.h"
+#include "MemoryFree.h"
 
 CBI* cbi = CBI::getInstance();
 TimedServos* ts = TimedServos::getInstance();
 R2FXMessageHandler message = R2FXMessageHandler();
 
 /**
- * Setup for each of R2 subsystems here, each 
+ * Setup for each of R2 subsystems here, each
  */
 void setup() {
   // initialize random seed with reading from a PIN that is not used.
@@ -50,12 +51,28 @@ void setup() {
   TWBR = 12; // upgrade to 400KHz!
 
   VoltageDivider::getInstance()->setup(VD_ANALOG_VIN_PIN, VD_RESISTOR_1,
-                                      VD_RESISTOR_2, VD_MIN_VOLTAGE,
-                                      VD_MAX_VOLTAGE);
+                                       VD_RESISTOR_2, VD_MIN_VOLTAGE,
+                                       VD_MAX_VOLTAGE);
 }
 
+int count = 0;
+long cycleStart = millis();
+
+void printDebugInfo() {
+  long timeElapsed = millis() - cycleStart;
+  if (timeElapsed > 5000) {
+    Serial.print(freeMemory());Serial.print(" bytes free. ");
+    Serial.print(count / (timeElapsed / 1000)); Serial.println(" cycles per second.");
+    count = 0;
+    cycleStart = millis();
+  }
+  count++;
+}
 void loop() {
   message.loop();
   ts->loop();
   cbi->loop();
+
+  printDebugInfo();
+
 }
