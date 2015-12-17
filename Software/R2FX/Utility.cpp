@@ -66,3 +66,11 @@ char * Utility::floatToString(char * outstr, float value, int places, int minwid
   outstr[c++] = '\0'; return outstr;
 }
 
+uint8_t Utility::toInt(char *arr, uint8_t pos, uint8_t nBytes) {
+  String work = String();
+  for (uint8_t i = 0; i < nBytes; i++) {
+    work += String(arr[pos + i] - '0');
+  }
+  return work.toInt();
+}
+
