@@ -55,16 +55,25 @@ Command          | Description                         | Parameters             
 `PP(1,2,5,6)`    | pie panels #1,2,3,5,6               | ...                          | `[PP1]`
 `P(1-4)|(7,8,A)`| panel #1-4, or 7, 8, A (Hex for 10) | ...                          | `[PA0]`
 
-
-!(Front Body Descriptions)
-[../../Media/front_body.png]
-
 ##### Body Systems _[..](#r2fx-ascii-protocol)_
+
+Body sytem commands cover lighting, non directional movement, servos and more.  To illustrate the abbreviated terms to locations on the astromech see the diagram below.  The names of these components are used to control the astromech using the ASCII based protocol.
+
+![Front Body Descriptions]
+(../../Media/R2FX_Terminology.jpg)
+
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
-`U(T|B)`         | controls the position of the utility arms T=top, B=bottom | `null` or `0-127` (null == 0)| `[UT145]`
-`CB`             | enables or disables the charge bay panel , returns it's enabled state| `null` to set to false, or boolean `0|1` | `[CB]`
-`DP`				 | enables or disables the data port logics, returns it's state | ... | `[DP]`
+`U(T|B)`         | sets the position of the utility arms T=top, B=bottom | `null` or `0-127` (null == 0)| `[UT127]`
+`CBI`             | enables or disables the charge bay indicator panel , returns it's enabled state| `null` to set to false, or boolean `0|1` | `[CBI]`
+`CB`             | sets the door position on the charge bay, opening this door will cause the CBI to be enabled automatically | `null` or `0-127` (null == 0)| `[CB127]`
+`DPL`			    | enables or disables the data port logics, returns it's state | `null` to set to false, or boolean `0|1` | `[DPL]`
+`DP`             | sets the door position of the data port, opening this door will cause the DPL to be enabled | `null` or `0-127` (null == 0) | `[DPL127]`
+`LB`             | sets the door position of the lower charge bay |`null` or `0-127` (null == 0)| `[LB127]`
+`FR`             | sets the door position of the front right door |`null` or `0-127` (null == 0)| `[FR]`
+`FL`             | sets the door position of the front left door |`null` or `0-127` (null == 0)| `[FL90]`
+`RR`             | sets the door position of the rear right door |`null` or `0-127` (null == 0)| `[RR127]`
+`RL`             | sets the door position of the reat left door |`null` or `0-127` (null == 0)| `[RL15]`
 
 
 ##### System Commands _[..](#r2fx-ascii-protocol)_
