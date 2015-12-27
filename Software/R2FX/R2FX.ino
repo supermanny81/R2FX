@@ -68,6 +68,7 @@ void printDebugInfo() {
   }
   count++;
 }
+
 void loop() {
   message.loop();
   ts->loop();

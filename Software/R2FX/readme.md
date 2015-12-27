@@ -27,7 +27,7 @@ An example of it's usage can be found below, here we are closing the center pie 
 
 ```
 
-[PPC0][PP180]
+[PPC0][PP127]
 
 ```
 In addition to sending messages, the protocol also returns reponses.  A R2FX ASCII response will contain one or more lines, followed by an exit message of either `OK` or `ERR`.  If entered into a terminal, these are some of the responses you may get.
