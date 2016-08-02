@@ -10,14 +10,18 @@
 
 void AbstractR2FXMessageHandler::processByte(byte incomingByte) {
   // process binary command types here...
-  if ((state == EMPTY && incomingByte > 127) || type == BINARY_CMD_TYPE) {
+  if ((state == EMPTY && incomingByte == 254) || type == BINARY_CMD_TYPE) {
     if (state == EMPTY) {
       clearCommand();
       state = RECEIVING;
       type = BINARY_CMD_TYPE;
     }
-    commandBuffer[cmdIndex] = incomingByte;
-    cmdIndex++;
+    if (incomingByte == 255) {
+      state = WAIT;
+    } else {
+      commandBuffer[cmdIndex] = incomingByte;
+      cmdIndex++; 
+    }
   } else {
     // process ascii command types here...
     if (incomingByte == '[') {
@@ -67,6 +71,10 @@ void AbstractR2FXMessageHandler::returnStatus(byte exitCode, const char *msg) {
         Serial.println(F("ERR: Not implemented."));
       }
   }
+}
+
+void AbstractR2FXMessageHandler::handleBinaryMessage(byte *cmd) {
+  
 }
 
 void AbstractR2FXMessageHandler::handleASCIIMessage(char *cmd) {

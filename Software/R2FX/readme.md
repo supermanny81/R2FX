@@ -94,11 +94,11 @@ An R2FX message **always** starts with a command byte. The table below outlines 
 #####<a name="r2fx-byte-message"></a> R2FX Message Format _[..](#r2fx-byte-protocol)_
 ```
 
-         CMD.,  LEN.,  DATA..............,  CRC
-         0xF0,  0x03,  0xA1,  0xC1,  0xF7,  0xCC
-         |_______________________________|
-                       | |
-       CRC computed from the complete packet.    
+         STRT, CMD.,  LEN.,  DATA..............,  CRC., END
+         0xFE, 0xF0,  0x03,  0xA1,  0xC1,  0xF7,  0xCC, 0xFF
+              |_______________________________|
+                            | |
+            CRC computed from the packets data.    
             
 ```
 
@@ -138,7 +138,8 @@ Range (HEX) | Range (DEC) | Purpose
 `0x80-0xB2` |   127-178   | reserved for Dome FX systems
 `0xB3-0xDA` |   179-219   | reserved for Body FX systems
 `0xDB-0xEF` |   220-239   | reserved for Audio FX systems
-`0xF0-0xFF` |   240-255   | reserved for R2FX managment and telemetry
+`0xF0-0xFF` |   240-254   | reserved for R2FX managment and telemetry
+`0xFE-0xFF` |   254-255   | reserved for start and end of binary protocol
 
 
 #####<a name="r2fx-byte-dome"></a> Dome Systems _[..](#r2fx-byte-protocol)_
@@ -220,7 +221,7 @@ Offset | Length   | Description
 0x0C   | 2 bytes  | start cluster
 0x1E   | 2 bytes  | file size in bytes
  
-##### Data Clusters 0xFDB-0x7CF0 _[..](#r2fx-r2fs)_ 
+##### Data Clusters 4059-31984 (0xFDB-0x7CF0) - 27925 clusters _[..](#r2fx-r2fs)_ 
 Offset | Length   | Description
 -------|----------|-------------
 0x00   | 16 bytes | data...

@@ -58,6 +58,8 @@ class AbstractR2FXMessageHandler {
     uint8_t toInt(char *arr, uint8_t pos, uint8_t nBytes);
 
     void handleASCIIMessage(char *cmd);
+
+    void handleBinaryMessage(byte *cmd);
     
     /**
      *  This method needs an implementation when subclassed in other R2FX enabled systems.

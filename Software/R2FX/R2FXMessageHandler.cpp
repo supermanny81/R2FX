@@ -10,16 +10,16 @@ void R2FXMessageHandler::loop() {
       processByte(Serial.read());
       transport = SERIAL_TRANSPORT;
     }
-
   } else if (state == WAIT) {
     const char *response = { '\0' };
     byte exitCode = 0;
-
-    // TODO: 
-    handleASCIIMessage((char*) commandBuffer);
+    if (type == BINARY_CMD_TYPE) {
+        handleBinaryMessage((byte*) commandBuffer);
+    } else if (type == ASCII_CMD_TYPE) {
+        handleASCIIMessage((char*) commandBuffer);
+    }
     clearCommand();
   }
-  //Serial.println(freeMemory());
 }
 
 void R2FXMessageHandler::setDomePpcPos(byte pos, int duration) {
