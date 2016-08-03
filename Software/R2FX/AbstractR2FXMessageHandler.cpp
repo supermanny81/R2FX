@@ -51,6 +51,7 @@ void AbstractR2FXMessageHandler::clearCommand() {
 }
 
 void AbstractR2FXMessageHandler::returnStatus(byte exitCode, const char *msg) {
+  // TODO: Return command for both ASCII and Binary protocol
   if (msg != '\0') {
     Serial.println(msg);
   }

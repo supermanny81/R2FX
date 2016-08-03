@@ -132,14 +132,14 @@ Range (HEX) | Range (DEC) | Purpose
 :-----------|:-----------:|:----------
 `0x00-0x5A` |    0-90     | tbd
 `0x5B`      |     91      | restricted to maintain compatibility with R2FX serial based protocol
-`0x5C`      |     92      | restricted
+`0x5C`      |     92      | restricted, used for byte stuffing in binary protocol 
 `0x5D`      |     93      | restricted to maintain compatibility with R2FX serial based protocol
 `0x5E-0x79` |    94-126   | tbd
 `0x80-0xB2` |   127-178   | reserved for Dome FX systems
 `0xB3-0xDA` |   179-219   | reserved for Body FX systems
 `0xDB-0xEF` |   220-239   | reserved for Audio FX systems
 `0xF0-0xFF` |   240-254   | reserved for R2FX managment and telemetry
-`0xFE-0xFF` |   254-255   | reserved for start and end of binary protocol
+`0xFE-0xFF` |   254-255   | restricted for start and end of binary protocol
 
 
 #####<a name="r2fx-byte-dome"></a> Dome Systems _[..](#r2fx-byte-protocol)_
