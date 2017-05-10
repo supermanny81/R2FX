@@ -53,7 +53,7 @@ Body sytem commands cover lighting, non directional movement, servos and more be
 
 Command          | Description                         | Parameters                   | Example
 :----------------|:------------------------------------|:-----------------------------|---------
-`U(T|B)`         | sets the position of the utility arms T=top, B=bottom | `null` or `0-127` (null == 0)| `[UT127]`
+`U(T or B)`         | sets the position of the utility arms T=top, B=bottom | `null` or `0-127` (null == 0)| `[UT127]`
 `CBI`             | enables or disables the charge bay indicator panel , returns it's enabled state| `null` to set to false, or boolean `0|1` | `[CBI]`
 `CB`             | sets the door position on the charge bay, opening this door will cause the CBI to be enabled automatically | `null` or `0-127` (null == 0)| `[CB127]`
 `DPL`			    | enables or disables the data port logics, returns it's state | `null` to set to false, or boolean `0|1` | `[DPL]`
@@ -77,7 +77,7 @@ Command          | Description                         | Parameters             
 
 
 
-A R2FX command and its data parameters are refferred to as an R2FX message . The minimum size of a message is 3 bytes *(one command byte, a length parameter signed 8 bit integer (-1) with no parameter (data) bytes), and a CRC field*. The maximum size of a R2FX message currently can be up to 16 bytes, however in practice this should rarely happen and in theory could be expanded to 130 bytes (CMD + LEN + 127 bytes + CRC).
+A R2FX command and its data parameters are referred to as an R2FX message . The minimum size of a message is 3 bytes *(one command byte, a length parameter signed 8 bit integer (0) with no parameter (data) bytes), and a CRC field*. The maximum size of a R2FX message currently can be up to 16 bytes, however in practice this should rarely happen and in theory could be expanded to 130 bytes (CMD + LEN + 127 bytes + CRC).
 
 An R2FX message **always** starts with a command byte. The table below outlines the possible command types that may be used when using R2FX.
 
@@ -128,21 +128,37 @@ Range (HEX) | Range (DEC) | Purpose
 `0x80-0xB2` |   127-178   | reserved for Dome FX systems
 `0xB3-0xDA` |   179-219   | reserved for Body FX systems
 `0xDB-0xEF` |   220-239   | reserved for Audio FX systems
-`0xF0-0xFF` |   240-254   | reserved for R2FX managment and telemetry
+`0xF0-0xFF` |   240-254   | reserved for R2FX management and telemetry
 `0xFE-0xFF` |   254-255   | restricted for start and end of binary protocol
 
 
 ##### <a name="r2fx-byte-dome"></a> Dome Systems _[..](#r2fx-byte-protocol)_
 
-| Command | Description | Length | Parameters  <br>*0-13 bytes*
-:---------|:------------|:-------|:-----------------------------
- `0x80`   |             |   0    |        ...     
+| Command | Description     | Length | Parameters  <br>_0-13 bytes_
+:---------|:----------------|:-------|:--------------------------------
+ 127      | Gets the position of the dome  |   0    |            
 
 ##### <a name="r2fx-byte-body"></a> Body Systems _[..](#r2fx-byte-protocol)_
 
-| Command | Description | Length | Parameters  <br>*0-13 bytes*
-:---------|:------------|:-------|:-----------------------------
- `0xB3`   |             |   0    |        ...     
+| Command | Description            | Length | Parameters  <br>_0-13 bytes_
+:---------|:-----------------------|:-------|:--------------------------------
+ 179      | Set pos for both UA    |   1-3?   | byte pos: Position between 0-127, int time: Allotted time for travel to position  
+ 180      | Set pos for top UA     |   1-3?   | byte pos: Position between 0-127, int time: Allotted time for travel to position  
+ 181      | Set pos for bottom UA  |   1-3?   | byte pos: Position between 0-127, int time: Allotted time for travel to position  
+ 185      | Query/set DPL/CBI ON state | 1? | boolean isEnabled: true/false
+ 186      | Query/set DPL ON state |    1?    | boolean isEnabled: true/false
+ 187      | Query/set CBI ON state |    1?    | boolean isEnabled: true/false
+ 188      | Set voltage var for CBI|    1     | byte level: Percentage of battery remaining
+ 189      | CBI Play A Sequence    |    1     | byte nSeq: 1 is heart sequence
+ 190      | Data Panel Bay Position|    1     | byte pos: Position between 0-127, int time: Allotted time for travel to position
+ 191      | Charge Bay Position    |    1     | byte pos: Position between 0-127, int time: Allotted time for travel to position  
+ 192      | Lower Bay Position     |    1     | byte pos: Position between 0-127, int
+ 193      | Front Left Bay Position|    1     | byte pos: Position between 0-127, int time: Allotted time for travel to position  
+ 194      | Front Right Bay Position|    1     | byte pos: Position between 0-127, int time: Allotted time for travel to position  
+ 195      | Rear Left Bay Position|    1     | byte pos: Position between 0-127, int time: Allotted time for travel to position  
+ 196      | Rear Right Bay Position|    1     | byte pos: Position between 0-127, int time: Allotted time for travel to position  
+ ...      |                 |         |
+ 219      |                 |         |
 
 
 ##### <a name="r2fx-byte-audio"></a> Audo Systems _[..](#r2fx-byte-protocol)_
@@ -153,11 +169,15 @@ Range (HEX) | Range (DEC) | Purpose
 
 ##### <a name="r2fx-byte-t2fx"></a> R2FX Systems _[..](#r2fx-byte-protocol)_
 
-| Command | Description | Length | Parameters  <br>*0-13 bytes*
-:---------|:------------|:-------|:-----------------------------
- `0xB3`   |             |   0    |        ...     
+| Command | Description            | Length | Parameters  <br>_0-13 bytes_
+:---------|:-----------------------|:-------|:--------------------------------
+ 240      |  Set/get VCC in Percent|   1?    |        byte level: percent of battery     
+ ...      |             |   0    |        ...     
+ 254      |             |   0    |        ...     
 
 ### <a name="r2fx-r2fs"></a>Storage of Sequences via FRAM Module _[..](#r2fx-ino)_
+
+_Work In Progress, this may be replaced with a SD card_
 
 Storage and retrieval of R2FX sequences use FRAM. This avoids the need to allocate a large buffer to read SD cards, while also sequences to written over and over without the worry of damaging the chip (EEPROM).  Due to the limited amount of space (32k), sequences are stored in the binary format using R2FS, a simple file system targeted towards efficient management of astromech sequences and other file based needs.
 

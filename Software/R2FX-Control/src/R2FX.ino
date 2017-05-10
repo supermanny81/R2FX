@@ -8,8 +8,10 @@
            /   |  _ < / __/|  _|  /  \   \
           |    |_| \_\_____|_|   /_/\_\   |
      ___  |-------------------------------|  ___
-     |  |_|    drive and control system   |_|  |
-     |          =====================          |
+     |  |_| Visual Effects Control System |_|  |
+     |          <==--================          |
+                =================--==>
+                        /---\
 
   Based on the execellent Padawan360 sketch by Dan Kraus, which was influenced
   by DanF's original Padawan control system.  A lot changed from the orginal
@@ -59,7 +61,7 @@
 #include <Wire.h>
 #include <XBOXRECV.h>
 
-#include "PadawanFXConfig.h"
+#include "R2FXConfig.h"
 #include "Periscope.h"
 #include "SoundFX.h"
 #include "TrackConfig.h"
@@ -72,6 +74,8 @@
 #include "WavTrigger2.h"
 #include "WavTrigger2.cpp"
 #include "Voltage.h"
+
+#define VERSION "0.0.1"
 
 Sabertooth Sabertooth2xXX(128, Serial1);
 Sabertooth Syren10(128, Serial2);
@@ -125,7 +129,7 @@ void setup() {
 
   // Initialize with log level and log output.
   Log.begin(LOG_LEVEL_VERBOSE, &Serial, true);
-  Log.verbose(F("PadawanFX" CR));
+  Log.fatal(F("R2FX - Control v%s" CR), VERSION);
 
   if (Usb.Init() == -1) {
     Log.fatal(F("\r\nOSC did not start" CR));
@@ -163,9 +167,7 @@ void loop() {
   animateLed();
   Usb.Task();
 
-  //if we're not connected, return so we don't bother doing anything else.
-  // set all movement to 0 so if we lose connection we don't have a runaway droid!
-  // a restraining bolt and jawa droid caller won't save us here!
+  // no connection? no soup for you!
   if (!Xbox.XboxReceiverConnected || !Xbox.Xbox360Connected[0]) {
     Sabertooth2xXX.drive(0);
     Sabertooth2xXX.turn(0);
@@ -175,7 +177,8 @@ void loop() {
     return;
   }
 
-  // After the controller connects, Blink all the LEDs so we know drives are disengaged at start
+  // After the controller connects, Blink all the LEDs so we know drives are
+  // disengaged at start
   if (!firstLoadOnConnect) {
     firstLoadOnConnect = true;
     isDriveEnabled = false;
@@ -183,7 +186,8 @@ void loop() {
     setLedMode(ROTATING, 0);
   }
 
-  // enable / disable right stick (droid movement) & play a sound to signal motor state
+  // enable / disable right stick (droid movement) & play a sound to signal
+  // motor state
   if (Xbox.getButtonClick(START, 0)) {
     if (isDriveEnabled) {
       isDriveEnabled = false;
@@ -323,8 +327,8 @@ void loop() {
   // get battery levels
   if (Xbox.getButtonClick(XBOX, 0)) {
     voltage->sample();
-    Log.notice(F("Xbox Battery Level: %d"CR), Xbox.getBatteryLevel(0));
-    Log.notice(F("System Battery Level: %s (%d percent)"CR), String(voltage->getVCC()).c_str(), voltage->getVCCPct());
+    Log.notice(F("Xbox Battery Level: %d" CR), Xbox.getBatteryLevel(0));
+    Log.notice(F("System Battery Level: %s (%d percent)" CR), String(voltage->getVCC()).c_str(), voltage->getVCCPct());
     isLedAnimate = true;
   }
 
@@ -360,6 +364,11 @@ void loop() {
   ts->loop();
 }
 
+/**
+* Overloads the Xbox classes default method for setting the mode, this method is
+* used to remember the state the controller was in before performing LED
+* animations.
+*/
 void setLedMode(LEDModeEnum ledMode, uint8_t controller) {
   ledModeState = ledMode;
   Xbox.setLedMode(ledMode, 0);
@@ -367,6 +376,10 @@ void setLedMode(LEDModeEnum ledMode, uint8_t controller) {
   ledModeStateUpdate = millis();
 }
 
+/**
+* Overloads the Xbox class' default method for setting the LED, this method is
+* used to remember the state of the controller before an LED animation is used.
+*/
 void setLedOn(LEDEnum led, uint8_t controller) {
   ledState = led;
   Xbox.setLedOn(led, controller);
@@ -404,6 +417,10 @@ void animateLed() {
   }
 }
 
+/**
+* Chooses which LED should be lit on the XBOX controller based on a scale of
+* 1-100 (technically 127, but it really should be 0-100%)
+*/
 LEDEnum chooseLED(byte level) {
   if (level > 75) {
     return LED4;
@@ -472,7 +489,7 @@ void isDisconnecting() {
       xboxBtnPressedSince = millis();
     } else if (millis() - xboxBtnPressedSince >= 2000 && millis() - xboxBtnPressedSince < 2500) {
       Xbox.setRumbleOn(0, 127, 0);
-      Log.warning(F("Shutting down controller.  Elapsed time: %d"CR), millis() - xboxBtnPressedSince);
+      Log.warning(F("Shutting down controller.  Elapsed time: %d" CR), millis() - xboxBtnPressedSince);
     } else if (millis() - xboxBtnPressedSince >= 2500) {
       xboxBtnPressedSince = 0;
       Xbox.disconnect(0);
@@ -482,6 +499,9 @@ void isDisconnecting() {
   }
 }
 
+/**
+* TODO: refactor this method
+*/
 void automationMode() {
   // Plays random sounds or dome movements for automations when in automation mode
   if (isInAutomationMode) {

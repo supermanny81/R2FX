@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <ArduinoLog.h>
 #include <LedControl.h>
 #include <Wire.h>
@@ -30,40 +31,33 @@ void loop() {
 
 void receiveEvent(int nBytes) {
   R2FXCommand cmd = (R2FXCommand) Wire.read();
+  if (nBytes < 2) {
+    Log.fatal(F("Required paramters were missing from the command." CR));
+    return;
+  }
+
+  byte val = Wire.read();
   switch (cmd) {
-    case R2FXCommand::CBI_DPL_DISABLE:
-      cbi->allOn(false);
-      Log.notice(F("Disabling CBI & DPL." CR));
+    case R2FXCommand::CBI_DPL_ENABLED:
+      cbi->allOn((bool) val);
+      Log.notice(F("CBI & DPL enabled (%b)." CR), val);
       break;
-    case R2FXCommand::CBI_DPL_ENABLE:
-      cbi->allOn(true);
-      Log.notice(F("Enabling CBI & DPL." CR));
+    case R2FXCommand::DPL_ENABLED:
+      cbi->isDPLEnabled(val);
+      Log.notice(F("DPL enabled (%b)." CR), val);
       break;
-    case R2FXCommand::DPL_DISABLE:
-      cbi->isDPLEnabled(false);
-      Log.notice(F("Disabling DPL." CR));
+    case R2FXCommand::CBI_ENABLED:
+      cbi->isCBIEnabled(val);
+      Log.notice(F("CBI enabled (%b)." CR), val);
       break;
-    case R2FXCommand::DPL_ENABLE:
-      cbi->isDPLEnabled(true);
-      Log.notice(F("Enabling DPL." CR));
-      break;
-    case R2FXCommand::CBI_DISABLE:
-      cbi->isCBIEnabled(false);
-      Log.notice(F("Disabling CBI." CR));
-      break;
-    case R2FXCommand::CBI_ENABLE:
-      cbi->isCBIEnabled(true);
-      Log.notice(F("Enabling CBI." CR));
-      break;
-    case R2FXCommand::CBI_HEART_SEQ:
-      cbi->heartSEQ();
-      Log.notice(F("Playing heart sequence." CR));
-      break;
-    case R2FXCommand::CBI_DISPLAY_VOLTAGE:
-      if (nBytes > 1) {
-        byte voltage = Wire.read();
-        cbi->setVoltage(voltage);
+    case R2FXCommand::CBI_SEQ:
+      if (val == 1) {
+        cbi->heartSEQ();
+        Log.notice(F("Playing heart sequence." CR));
       }
+      break;
+    case R2FXCommand::CBI_VOLTAGE:
+      cbi->setVoltage(val);
       break;
     default:
       Log.notice(F("Unknown command: %d" CR), cmd);

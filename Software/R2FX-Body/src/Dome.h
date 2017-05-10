@@ -8,7 +8,7 @@
 #endif
 #include <LedControl.h>
 
-#define DEGREES_TO_ADJUST 45
+#define DEGREES_TO_OFFSET 45
 #define ROTARY_POT_PIN 2
 #define ROTARY_POT_MIN 50
 #define ROTARY_POT_MAX 900
@@ -21,7 +21,7 @@ class Dome {
     //sensor reding and variables used to transform the value to desired poistion
     int val = 0;
     int rawDegree = 0;    // the position of the dome, 0 is facing forward
-    int adjustDegree = DEGREES_TO_ADJUST;
+    int adjustDegree = DEGREES_TO_OFFSET;
     int degree = 0;
 
     // starter values
