@@ -33,24 +33,23 @@ class TimedServos {
       boolean isDisabled = false;
     }  TimedServo;
 
-    typedef struct 
+    typedef struct
     {
       TimedServo channels[16];
       Adafruit_PWMServoDriver pwm;
     } PWMBoard;
 
-    PWMBoard servoBoards[2];
-        
   private:
     TimedServos();
     TimedServos(TimedServos const&); // copy disabled
-    void operator=(TimedServos const&); // assigment disabled 
+    void operator=(TimedServos const&); // assigment disabled
     void setServoPulse(Adafruit_PWMServoDriver pwm, uint8_t srvNum, uint8_t srvPos, uint16_t srvMin, uint16_t srvMax);
     void disableChannel(Adafruit_PWMServoDriver pwm, uint8_t srvNum);
     void initializeBodyServoConfig();
     void initializeDomeConfig();
 
   public:
+    PWMBoard servoBoards[2];
     static TimedServos* getInstance();
 
     /**
@@ -59,13 +58,13 @@ class TimedServos {
     void setServoPosition(uint8_t board, uint8_t channel, uint8_t srvPos, uint16_t timeAlloted);
 
     /**
-     * Configures the TimedServo classes, boards and thier assignments.  This method must be called 
+     * Configures the TimedServo classes, boards and thier assignments.  This method must be called
      * once before any servo movement is attempted.
      */
     void setup();
 
      /**
-     * This method needs to be called in a loop and will iterate through any sets of movements that are currently 
+     * This method needs to be called in a loop and will iterate through any sets of movements that are currently
      * in action or disable a servo once it has reached it position for the defined period of time.
      */
     void loop();

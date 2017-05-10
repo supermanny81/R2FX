@@ -25,12 +25,12 @@
 #include "CBI.h"
 #include "Utility.h"
 #include "AbstractR2FXMessageHandler.h"
-#include "MemoryFree.h"
+#include "MemFree.h"
 
 class R2FXMessageHandler: public AbstractR2FXMessageHandler {
   public:
     virtual void loop();
-    
+
   private:
     Adafruit_BluefruitLE_SPI ble = Adafruit_BluefruitLE_SPI(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
     TimedServos* ts = TimedServos::getInstance();
@@ -54,4 +54,3 @@ class R2FXMessageHandler: public AbstractR2FXMessageHandler {
     virtual void setDomeP10Pos(byte pos, int duration); // panel 10
 };
 #endif
-
