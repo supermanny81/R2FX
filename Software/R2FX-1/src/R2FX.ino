@@ -11,8 +11,10 @@
      |  |_|    drive and control system   |_|  |
      |          =====================          |
 
-  Based on the execellent Padawan360 sketch by Dan Kraus, which was influenced by DanF's
-  original Padawan control system.
+  Based on the execellent Padawan360 sketch by Dan Kraus, which was influenced
+  by DanF's original Padawan control system.  A lot changed from the orginal
+  fork, only a few lines remain, too much change to make sense keeping it as a
+  fork since there likely won't be pull requests being made.
 
   Hardware:
   Arduino Mega
@@ -22,6 +24,9 @@
   Sabertooth Motor Controller
   Syren10 Motor Controller
   Sparkfun WAV Trigger
+
+  Optional:
+  0-25V Voltage Sensor
 
   Set Sabertooth 2x25/2x12 Dip Switches 1 and 2 Down, All Others Up (9600 baud)
 
