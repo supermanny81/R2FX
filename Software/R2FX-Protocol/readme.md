@@ -70,7 +70,7 @@ Command          | Description                         | Parameters             
 :----------------|:------------------------------------|:-----------------------------|---------
 `V(P|D)`         | prints the current voltage level in decimal (D) or percent (P) | `null` | `[VP]`
 
-###<a name="r2fx-byte-protocol"></a>R2FX Byte Protocol _[..](#r2fx-ino)_
+### <a name="r2fx-byte-protocol"></a>R2FX Byte Protocol _[..](#r2fx-ino)_
 >_---Work in progress----_
 
 [Message](#r2fx-byte-message)  | [CRC](#r2fx-byte-crc)  |  [Reserved Command Ranges](#r2fx-reserved-commands)  |  [Dome Systems]()  |  [Body Systems]()  |  [Audio Systems]()  | [R2FX Management]()
@@ -81,7 +81,7 @@ A R2FX command and its data parameters are refferred to as an R2FX message . The
 
 An R2FX message **always** starts with a command byte. The table below outlines the possible command types that may be used when using R2FX.
 
-#####<a name="r2fx-byte-message"></a> R2FX Message Format _[..](#r2fx-byte-protocol)_
+##### <a name="r2fx-byte-message"></a> R2FX Message Format _[..](#r2fx-byte-protocol)_
 ```
 
          STRT, CMD.,  LEN.,  DATA..............,  CRC., END
@@ -92,7 +92,7 @@ An R2FX message **always** starts with a command byte. The table below outlines 
 
 ```
 
-#####<a name="r2fx-byte-crc"></a> R2FX CRC _[..](#r2fx-byte-protocol)_
+##### <a name="r2fx-byte-crc"></a> R2FX CRC _[..](#r2fx-byte-protocol)_
 
 ```
 const byte CRC_INIT = 0xF0;
@@ -115,7 +115,7 @@ unsigned byte crc_calc(unsigned byte buffer[], byte size) {
 ```
 
 
-#####<a name="r2fx-reserved-commands"></a> Reserved Command Ranges _[..](#r2fx-byte-protocol)_
+##### <a name="r2fx-reserved-commands"></a> Reserved Command Ranges _[..](#r2fx-byte-protocol)_
 The ranges in the command space are reserved or restricted for groups of systems, compatibility reasons, or future expansion.
 
 Range (HEX) | Range (DEC) | Purpose
@@ -132,32 +132,32 @@ Range (HEX) | Range (DEC) | Purpose
 `0xFE-0xFF` |   254-255   | restricted for start and end of binary protocol
 
 
-#####<a name="r2fx-byte-dome"></a> Dome Systems _[..](#r2fx-byte-protocol)_
+##### <a name="r2fx-byte-dome"></a> Dome Systems _[..](#r2fx-byte-protocol)_
 
 | Command | Description | Length | Parameters  <br>*0-13 bytes*
 :---------|:------------|:-------|:-----------------------------
  `0x80`   |             |   0    |        ...     
 
-#####<a name="r2fx-byte-body"></a> Body Systems _[..](#r2fx-byte-protocol)_
+##### <a name="r2fx-byte-body"></a> Body Systems _[..](#r2fx-byte-protocol)_
 
 | Command | Description | Length | Parameters  <br>*0-13 bytes*
 :---------|:------------|:-------|:-----------------------------
  `0xB3`   |             |   0    |        ...     
 
 
-#####<a name="r2fx-byte-audio"></a> Audo Systems _[..](#r2fx-byte-protocol)_
+##### <a name="r2fx-byte-audio"></a> Audo Systems _[..](#r2fx-byte-protocol)_
 
 | Command | Description | Length | Parameters  <br>*0-13 bytes*
 :---------|:------------|:-------|:-----------------------------
  `0xDB`   |             |   0    |        ...     
 
-#####<a name="r2fx-byte-t2fx"></a> R2FX Systems _[..](#r2fx-byte-protocol)_
+##### <a name="r2fx-byte-t2fx"></a> R2FX Systems _[..](#r2fx-byte-protocol)_
 
 | Command | Description | Length | Parameters  <br>*0-13 bytes*
 :---------|:------------|:-------|:-----------------------------
  `0xB3`   |             |   0    |        ...     
 
-###<a name="r2fx-r2fs"></a>Storage of Sequences via FRAM Module _[..](#r2fx-ino)_
+### <a name="r2fx-r2fs"></a>Storage of Sequences via FRAM Module _[..](#r2fx-ino)_
 
 Storage and retrieval of R2FX sequences use FRAM. This avoids the need to allocate a large buffer to read SD cards, while also sequences to written over and over without the worry of damaging the chip (EEPROM).  Due to the limited amount of space (32k), sequences are stored in the binary format using R2FS, a simple file system targeted towards efficient management of astromech sequences and other file based needs.
 
