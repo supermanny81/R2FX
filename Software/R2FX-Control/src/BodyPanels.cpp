@@ -1,4 +1,5 @@
 #include "BodyPanels.h"
+#include "R2FXEnums.h"
 
 BodyPanels::BodyPanels() {
   ts->servoBoards[SV_BODY_PANEL_BOARD].channels[SV_CB].isInversed = SV_CB_IS_INVERSED;
@@ -41,20 +42,44 @@ void BodyPanels::setup() {
   closeAll();
 }
 
+void BodyPanels::dplEnabled(bool enabled) {
+  Wire.beginTransmission(BODY_FX_ADDRESS);
+  Wire.write((byte) R2FXCommand::DPL_ENABLED);
+  Wire.write(enabled);
+  Wire.endTransmission();
+  Log.notice(F("Sent command: %d to device ID: %d" CR),
+    R2FXCommand::DPL_ENABLED, enabled, BODY_FX_ADDRESS);
+}
+
+void BodyPanels::cbiEnabled(bool enabled) {
+  Wire.beginTransmission(BODY_FX_ADDRESS);
+  Wire.write((byte) R2FXCommand::CBI_ENABLED);
+  Wire.write(enabled);
+  Wire.endTransmission();
+  Log.notice(F("Sent command: %d to device ID: %d" CR),
+    R2FXCommand::CBI_ENABLED, enabled, BODY_FX_ADDRESS);
+}
+
 void BodyPanels::setCBPos(byte pos, int timeAllotted) {
-  if (pos > 0)
+  if (pos > 0) {
     isCBOpen = true;
-  else
+    cbiEnabled(true);
+  } else {
     isCBOpen = false;
+    cbiEnabled(false);
+  }
   ts->setServoPosition(SV_BODY_PANEL_BOARD, SV_CB, pos, timeAllotted);
   Log.notice(F("Setting CB bay to: %d" CR), pos);
 }
 
 void BodyPanels::setLBPos(byte pos, int timeAllotted) {
-  if (pos > 0)
+  if (pos > 0) {
     isLBOpen = true;
-  else
+    dplEnabled(true);
+  } else {
     isLBOpen = false;
+    dplEnabled(false);
+  }
   ts->setServoPosition(SV_BODY_PANEL_BOARD, SV_LOWER_BAY, pos, timeAllotted);
   Log.notice(F("Setting LB bay to: %d" CR), pos);
 }

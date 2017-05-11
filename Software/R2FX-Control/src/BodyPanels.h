@@ -11,6 +11,8 @@
 
 #include "TimedServos.h"
 
+#define BODY_FX_ADDRESS 0x08
+
 #define SV_BODY_PANEL_BOARD 1
 #define SV_CB 2
 #define SV_CB_IS_INVERSED false
@@ -63,6 +65,8 @@ class BodyPanels {
     BodyPanels();
     BodyPanels(BodyPanels const&); // copy disabled
     void operator=(BodyPanels const&); // assigment disabled
+    void dplEnabled(bool enabled);
+    void cbiEnabled(bool enabled);
 
   public:
     static BodyPanels* getInstance();
