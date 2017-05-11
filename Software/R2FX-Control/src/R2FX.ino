@@ -61,6 +61,7 @@
 #include <Wire.h>
 #include <XBOXRECV.h>
 
+#include "BodyPanels.h"
 #include "R2FXConfig.h"
 #include "Periscope.h"
 #include "SoundFX.h"
@@ -120,6 +121,7 @@ SoundFX* sfx = SoundFX::getInstance();
 TimedServos* ts = TimedServos::getInstance();
 UA* ua = UA::getInstance();
 Voltage* voltage = Voltage::getInstance();
+BodyPanels* bodyPanels = BodyPanels::getInstance();
 
 void setup() {
   Serial.begin(115200);
@@ -159,6 +161,7 @@ void setup() {
   TWBR = 12; // upgrade to 400KHz!
   ts->setup();
   ua->setup();
+  bodyPanels->setup();
 }
 
 void loop() {
@@ -244,7 +247,7 @@ void loop() {
   // LEFT on control pad
   if (Xbox.getButtonClick(LEFT, 0)) {
     if (Xbox.getButtonPress(R1, 0)) {
-      // Nothing... yet
+      bodyPanels->closeAll();
     } else if (Xbox.getButtonPress(L1, 0)) {
       periscope->toggleRandom();
     } else {
@@ -256,7 +259,7 @@ void loop() {
   if (Xbox.getButtonClick(RIGHT, 0)) {
     //volume down
     if (Xbox.getButtonPress(R1, 0)) {
-      //Nothing.... yet
+      bodyPanels->openAll();
     } else if (Xbox.getButtonPress(L1, 0)) {
       periscope->toggleSearchMode();
     } else {

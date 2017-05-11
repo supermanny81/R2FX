@@ -32,32 +32,32 @@ void UA::setLowerArmPosition(byte pos, int timeAllotted) {
 
 void UA::toggleUpper() {
   byte pos = 0;
-  if (!is_top_open) {
+  if (!isTopOpen) {
     pos = 127;
   }
-  is_top_open = !is_top_open;
+  isTopOpen = !isTopOpen;
   setUpperArmPosition(pos);
 }
 
 void UA::toggleLower() {
   byte pos = 0;
-  if (!is_bottom_open) {
+  if (!isBottomOpen) {
     pos = 127;
   }
-  is_bottom_open = !is_bottom_open;
+  isBottomOpen = !isBottomOpen;
   setLowerArmPosition(pos);
 }
 
 void UA::openAll() {
-  is_top_open = false;
-  is_bottom_open = false;
+  isTopOpen = false;
+  isBottomOpen = false;
   toggleUpper();
   toggleLower();
 }
 
 void UA::closeAll() {
-  is_top_open = true;
-  is_bottom_open = true;
+  isTopOpen = true;
+  isBottomOpen = true;
   toggleUpper();
   toggleLower();
 }

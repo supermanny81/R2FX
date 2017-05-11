@@ -24,8 +24,8 @@
 
 class UA {
 
-    boolean is_top_open = false;
-    boolean is_bottom_open = false;
+    boolean isTopOpen = true;
+    boolean isBottomOpen = true;
 
   private:
     TimedServos* ts = TimedServos::getInstance();
