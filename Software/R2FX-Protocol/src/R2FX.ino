@@ -20,19 +20,12 @@
 #include <SoftwareSerial.h>
 #include <Adafruit_BLE.h>
 #include <Adafruit_BluefruitLE_SPI.h>
-#include <Adafruit_PWMServoDriver.h>
-#include <Adafruit_FRAM_I2C.h>
 #include "Wire.h"
-#include "CBI.h"
-#include "VoltageDivider.h"
 #include "R2FXConfig.h"
-#include "TimedServos.h"
 #include "Utility.h"
 #include "R2FXMessageHandler.h"
 #include "MemFree.h"
 
-CBI* cbi = CBI::getInstance();
-TimedServos* ts = TimedServos::getInstance();
 R2FXMessageHandler message = R2FXMessageHandler();
 
 /**
@@ -49,31 +42,8 @@ void setup() {
   cbi->setup();
   // use fast IIC
   TWBR = 12; // upgrade to 400KHz!
-
-  VoltageDivider::getInstance()->setup(VD_ANALOG_VIN_PIN, VD_RESISTOR_1,
-                                       VD_RESISTOR_2, VD_MIN_VOLTAGE,
-                                       VD_MAX_VOLTAGE);
-}
-
-int count = 0;
-long cycleStart = millis();
-
-void printDebugInfo() {
-  long timeElapsed = millis() - cycleStart;
-  if (timeElapsed > 5000) {
-    Serial.print(freeMemory());Serial.print(" bytes free. ");
-    Serial.print(count / (timeElapsed / 1000)); Serial.println(" cycles per second.");
-    count = 0;
-    cycleStart = millis();
-  }
-  count++;
 }
 
 void loop() {
   message.loop();
-  ts->loop();
-  cbi->loop();
-
-  printDebugInfo();
-
 }

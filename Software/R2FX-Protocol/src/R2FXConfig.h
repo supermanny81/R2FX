@@ -1,15 +1,15 @@
 /**
  *                ____  ____  _______  __
  *               |  _ \|___ \|  ___\ \/ /
- *               | |_) | __) | |_   \  / 
- *               |  _ < / __/|  _|  /  \ 
- *               |_| \_\_____|_|   /_/\_\                      
+ *               | |_) | __) | |_   \  /
+ *               |  _ < / __/|  _|  /  \
+ *               |_| \_\_____|_|   /_/\_\
  *           -------------------------------
  *            Visual effects control system.
- *         
+ *
  * R2FXConfig.h - Stores configuation specific details about your astromech.
  * Copyright (c) 2015 Manny Garcia, written for the R2Builders group
- * 
+ *
  * BSD license, all text above must be included in any redistribution
 **/
 
@@ -26,7 +26,7 @@
 //Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST)
 
 #define BLUEFRUIT_SPI_CS 8
-#define BLUEFRUIT_SPI_IRQ 7 
+#define BLUEFRUIT_SPI_IRQ 7
 #define BLUEFRUIT_SPI_RST 6
 
 /** Auto Dome **/
@@ -150,20 +150,6 @@
 #define SV_PA_IS_INVERSED false
 #define SV_PA_MIN 150
 #define SV_PA_MAX 600
-
-/** Charge Bay and Data Port **/
-//SPI Configuration for CBI and DPL
-#define SPI_DATA_PIN 13
-#define SPI_CLOCK_PIN 12
-#define SPI_CS_PIN 11
-
-//LED Control, one Maxim 72XX for each of the CBI and DPL, CBI must be first.
-#define LC_NUM_DEVICES 2
-
-//Brightness scale from 0 to 15
-#define BODY_DISPLAY_INTENSITY 15
-#define CBI_DISPLAY_DELAY 300
-#define DPL_DISPLAY_DELAY 100
 
 /** Voltage Divider Configuation **/
 #define VD_ANALOG_VIN_PIN 0

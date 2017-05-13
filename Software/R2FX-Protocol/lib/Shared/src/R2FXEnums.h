@@ -26,9 +26,9 @@ enum class R2FXCommand:unsigned byte {
 
   // DOME COMMANDS
   DOME_POSITION = 127,
-  
+
   // TELEMETRY AND MANAGEMENT COMMANDS
-  VOLTAGE_PCT = 240
+  BATTERY_PCT = 240
 };
 
 #endif

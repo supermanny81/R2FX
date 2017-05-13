@@ -22,6 +22,10 @@ void R2FXMessageHandler::loop() {
   }
 }
 
+/**
+ * TODO: Saving for later...
+ *
+ * 
 void R2FXMessageHandler::setDomePpcPos(byte pos, int duration) {
   ts->setServoPosition(1, SV_PPC, pos, duration);
   returnStatus(0, '\0');
@@ -77,10 +81,6 @@ void R2FXMessageHandler::setDomeP10Pos(byte pos, int duration) {
   returnStatus(0, '\0');
 }
 
-/**
- * TODO: Saving for later...
- * 
- * 
 void AbstractR2FXMessageHandler::handleASCIIMessage(char *cmd) {
     // Body Commands
     case 'C': {

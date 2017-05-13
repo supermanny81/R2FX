@@ -17,15 +17,9 @@
 
 #include "R2FXconfig.h"
 #include <SPI.h>
-#include <SoftwareSerial.h>
 #include <Adafruit_BLE.h>
 #include <Adafruit_BluefruitLE_SPI.h>
-#include "TimedServos.h"
-#include "VoltageDivider.h"
-#include "CBI.h"
-#include "Utility.h"
 #include "AbstractR2FXMessageHandler.h"
-#include "MemFree.h"
 
 class R2FXMessageHandler: public AbstractR2FXMessageHandler {
   public:
@@ -33,9 +27,6 @@ class R2FXMessageHandler: public AbstractR2FXMessageHandler {
 
   private:
     Adafruit_BluefruitLE_SPI ble = Adafruit_BluefruitLE_SPI(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
-    TimedServos* ts = TimedServos::getInstance();
-    CBI* cbi = CBI::getInstance();
-    VoltageDivider* vd = VoltageDivider::getInstance();
 
     /**
      * Dome Systems
