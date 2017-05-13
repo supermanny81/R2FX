@@ -75,7 +75,7 @@ Command          | Description                         | Parameters             
 
 [Message](#r2fx-byte-message)  | [CRC](#r2fx-byte-crc)  |  [Reserved Command Ranges](#r2fx-reserved-commands)  |  [Dome Systems]()  |  [Body Systems]()  |  [Audio Systems]()  | [R2FX Management]()
 
-
+<!---
 
 A R2FX command and its data parameters are referred to as an R2FX message . The minimum size of a message is 3 bytes *(one command byte, a length parameter signed 8 bit integer (0) with no parameter (data) bytes), and a CRC field*. The maximum size of a R2FX message currently can be up to 16 bytes, however in practice this should rarely happen and in theory could be expanded to 130 bytes (CMD + LEN + 127 bytes + CRC).
 
@@ -114,6 +114,7 @@ unsigned byte crc_calc(unsigned byte buffer[], byte size) {
 }
 ```
 
+ --->
 
 ##### <a name="r2fx-reserved-commands"></a> Reserved Command Ranges _[..](#r2fx-byte-protocol)_
 The ranges in the command space are reserved or restricted for groups of systems, compatibility reasons, or future expansion.
@@ -175,6 +176,7 @@ Range (HEX) | Range (DEC) | Purpose
  ...      |             |   0    |        ...     
  254      |             |   0    |        ...     
 
+<!--
 ### <a name="r2fx-r2fs"></a>Storage of Sequences via FRAM Module _[..](#r2fx-ino)_
 
 _Work In Progress, this may be replaced with a SD card_
@@ -235,3 +237,5 @@ Offset | Length   | Description
 Offset | Length   | Description
 -------|----------|-------------
 0x00   | 16 bytes | data...
+
+-->
