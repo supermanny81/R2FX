@@ -26,7 +26,7 @@
 
 #define SV_DP 4
 #define SV_DP_IS_INVERSED true
-#define SV_DP_MIN 320
+#define SV_DP_MIN 325
 #define SV_DP_MAX 500
 
 #define SV_FL 5

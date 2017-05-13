@@ -115,19 +115,23 @@ void CBI::heartSEQ() {
 }
 
 void CBI::isCBIEnabled(bool enable) {
-  for (int i = 0; i <= 6; i++) {
-    lc.setRow(0, i, B00000000);
+  if (enable != hasCBIOn) {
+    for (int i = 0; i <= 6; i++) {
+      lc.setRow(0, i, B00000000);
+    }
+    lc.shutdown(0, !enable);
+    hasCBIOn = enable;
   }
-  lc.shutdown(0, !enable);
-  hasCBIOn = enable;
 }
 
 void CBI::isDPLEnabled(bool enable) {
-  for (int i = 0; i <= 6; i++) {
-    lc.setRow(1, i, B00000000);
+  if (enable != hasDPLOn) {
+    for (int i = 0; i <= 6; i++) {
+      lc.setRow(1, i, B00000000);
+    }
+    lc.shutdown(1, !enable);
+    hasDPLOn = enable;
   }
-  lc.shutdown(1, !enable);
-  hasDPLOn = enable;
 }
 
 void CBI::setVoltage(byte percent) {
