@@ -25,7 +25,7 @@ class TimedServos {
     {
       uint8_t startPos = 0;
       uint8_t endPos = 0;
-      uint8_t currPos = 0;
+      uint8_t currPos = 127;
       uint16_t timeAllotted = 0;
       unsigned long millisAtCommand = 0;
       uint16_t srvMin;
