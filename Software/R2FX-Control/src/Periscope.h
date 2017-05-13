@@ -40,10 +40,10 @@ class Periscope {
 
     void toggleRandom() {
       if (periscopeRandomFast) {
-        // periscope up/down
+        // random fast
         sendCommand(4);
       } else {
-        // periscope up/down
+        // random slow
         sendCommand(5);
       }
       periscopeRandomFast = !periscopeRandomFast;
@@ -64,10 +64,9 @@ class Periscope {
 
     void toggleSearchMode() {
       if (periscopeSearchLightCCW) {
-        // periscope up/down
         sendCommand(3);
       } else {
-        // periscope up/down
+        // searclight CW
         sendCommand(7);
       }
       periscopeSearchLightCCW = !periscopeSearchLightCCW;
