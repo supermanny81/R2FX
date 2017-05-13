@@ -15,29 +15,29 @@
 
 #define SV_BODY_PANEL_BOARD 1
 #define SV_CB 2
-#define SV_CB_IS_INVERSED false
+#define SV_CB_IS_INVERSED true
 #define SV_CB_MIN 300
-#define SV_CB_MAX 400
+#define SV_CB_MAX 490
 
 #define SV_LOWER_BAY 3
 #define SV_LOWER_BAY_IS_INVERSED false
-#define SV_LOWER_BAY_MIN 300
-#define SV_LOWER_BAY_MAX 400
+#define SV_LOWER_BAY_MIN 310
+#define SV_LOWER_BAY_MAX 480
 
 #define SV_DP 4
-#define SV_DP_IS_INVERSED false
-#define SV_DP_MIN 300
-#define SV_DP_MAX 400
+#define SV_DP_IS_INVERSED true
+#define SV_DP_MIN 320
+#define SV_DP_MAX 500
 
 #define SV_FL 5
-#define SV_FL_IS_INVERSED false
-#define SV_FL_MIN 300
-#define SV_FL_MAX 400
+#define SV_FL_IS_INVERSED true
+#define SV_FL_MIN 330
+#define SV_FL_MAX 510
 
 #define SV_FR 6
 #define SV_FR_IS_INVERSED false
-#define SV_FR_MIN 300
-#define SV_FR_MAX 400
+#define SV_FR_MIN 200
+#define SV_FR_MAX 380
 
 #define SV_RL 7
 #define SV_RL_IS_INVERSED false

@@ -29,8 +29,7 @@ BodyPanels::BodyPanels() {
   ts->servoBoards[SV_BODY_PANEL_BOARD].channels[SV_RR].isInversed = SV_RR_IS_INVERSED;
   ts->servoBoards[SV_BODY_PANEL_BOARD].channels[SV_RR].srvMin = SV_RR_MIN;
   ts->servoBoards[SV_BODY_PANEL_BOARD].channels[SV_RR].srvMax = SV_RR_MAX;
-
-  Log.notice(F("BodyPanels setup." CR));
+  Log.notice(F("Bodypanels setup." CR));
 }
 
 BodyPanels* BodyPanels::getInstance() {
