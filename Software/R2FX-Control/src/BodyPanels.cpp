@@ -22,9 +22,9 @@ BodyPanels::BodyPanels() {
   ts->servoBoards[SV_BODY_PANEL_BOARD].channels[SV_FR].srvMin = SV_FR_MIN;
   ts->servoBoards[SV_BODY_PANEL_BOARD].channels[SV_FR].srvMax = SV_FR_MAX;
 
-  ts->servoBoards[SV_BODY_PANEL_BOARD].channels[SV_RR].isInversed = SV_RR_IS_INVERSED;
-  ts->servoBoards[SV_BODY_PANEL_BOARD].channels[SV_RR].srvMin = SV_RR_MIN;
-  ts->servoBoards[SV_BODY_PANEL_BOARD].channels[SV_RR].srvMax = SV_RR_MAX;
+  ts->servoBoards[SV_BODY_PANEL_BOARD].channels[SV_RL].isInversed = SV_RL_IS_INVERSED;
+  ts->servoBoards[SV_BODY_PANEL_BOARD].channels[SV_RL].srvMin = SV_RL_MIN;
+  ts->servoBoards[SV_BODY_PANEL_BOARD].channels[SV_RL].srvMax = SV_RL_MAX;
 
   ts->servoBoards[SV_BODY_PANEL_BOARD].channels[SV_RR].isInversed = SV_RR_IS_INVERSED;
   ts->servoBoards[SV_BODY_PANEL_BOARD].channels[SV_RR].srvMin = SV_RR_MIN;

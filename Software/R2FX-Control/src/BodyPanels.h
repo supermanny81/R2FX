@@ -41,13 +41,13 @@
 
 #define SV_RL 7
 #define SV_RL_IS_INVERSED false
-#define SV_RL_MIN 300
-#define SV_RL_MAX 400
+#define SV_RL_MIN 200
+#define SV_RL_MAX 350
 
 #define SV_RR 8
-#define SV_RR_IS_INVERSED false
+#define SV_RR_IS_INVERSED true
 #define SV_RR_MIN 300
-#define SV_RR_MAX 400
+#define SV_RR_MAX 450
 
 class BodyPanels {
 
