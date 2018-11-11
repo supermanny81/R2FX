@@ -76,7 +76,7 @@
 #include "WavTrigger2.cpp"
 #include "Voltage.h"
 
-#define VERSION "0.0.1"
+#define VERSION "0.0.2"
 
 Sabertooth Sabertooth2xXX(128, Serial1);
 Sabertooth Syren10(128, Serial2);
@@ -361,8 +361,11 @@ void loop() {
     sfx->play(PROC_SND_START);
   }
 
+  if (Xbox.getButtonClick(SYNC, 0)) {
+    Xbox.disconnect(0);
+  }
+
   drive();
-  isDisconnecting();
   automationMode();
   ts->loop();
 }
@@ -480,26 +483,6 @@ void drive() {
     domeThrottle = 0;
   }
   Syren10.motor(1, domeThrottle);
-}
-
-/**
-   Determines if the controller needs to be shutdown.  The disconnect signal is sent once the XBOX
-   button has been pressed for more than 3s, a rumble will indicate the controller is being shutdown.
-*/
-void isDisconnecting() {
-  if (Xbox.getButtonPress(XBOX, 0)) {
-    if (xboxBtnPressedSince == 0) {
-      xboxBtnPressedSince = millis();
-    } else if (millis() - xboxBtnPressedSince >= 2000 && millis() - xboxBtnPressedSince < 2500) {
-      Xbox.setRumbleOn(0, 127, 0);
-      Log.warning(F("Shutting down controller.  Elapsed time: %d" CR), millis() - xboxBtnPressedSince);
-    } else if (millis() - xboxBtnPressedSince >= 2500) {
-      xboxBtnPressedSince = 0;
-      Xbox.disconnect(0);
-    }
-  } else {
-    xboxBtnPressedSince = 0;
-  }
 }
 
 /**
